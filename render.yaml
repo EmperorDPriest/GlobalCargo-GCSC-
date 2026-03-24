@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: gcsc-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      # ── Set these securely in the Render dashboard (NOT here) ──────────────
+      # - key: MONGODB_URI
+      #   value: mongodb+srv://...
+      # - key: JWT_SECRET
+      #   value: <64-char random string>
+      # - key: ADMIN_EMAIL
+      #   value: admin@globalcargo360.com
+      # - key: ADMIN_PASSWORD
+      #   value: <strong password>
+      # - key: FRONTEND_URL
+      #   value: https://globalcargo360.com

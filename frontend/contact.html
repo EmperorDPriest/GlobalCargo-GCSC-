@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — Global Cargo Shipping Company</title>
+  <link rel="icon" href="assets/images/logos/logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="page-styles.css">
+</head>
+
+<body>
+  <div id="gcsc-nav"></div>
+  <div class="page-hero"
+    style="background-image:url('assets/images/site/premium_photo-1661933302016-2946d0b15650-compressed_webpifier.webp')">
+    <div class="ph-overlay"></div>
+    <div class="ph-inner">
+      <div class="ph-kicker">Support</div>
+      <h1 class="ph-title">Contact <span>Our US Team</span></h1>
+      <p class="ph-desc">We're here 24/7. Reach our US freight specialists by phone, email, live chat, or by visiting
+        one of our 14 US offices.</p>
+    </div>
+  </div>
+  <div class="breadcrumb-bar">
+    <div class="bc-inner"><a href="../index.html">Home</a> <span>›</span> <span>Contact Us</span></div>
+  </div>
+  <section class="page-section">
+    <div class="page-inner two-col-layout">
+      <div>
+        <div class="section-label">Get in Touch</div>
+        <h2 class="section-title">We'd Love to <span>Hear From You</span></h2>
+        <p class="section-desc">Whether you have a question about a shipment, need a quote, want to open an account, or
+          need to file a claim — our US team is ready to help. Response within 2 hours guaranteed during business hours.
+        </p>
+        <form class="quote-form" onsubmit="sendMsg(event)">
+          <div class="form-row two">
+            <div class="form-group"><label>Full Name *</label><input type="text" placeholder="Your full name" required>
+            </div>
+            <div class="form-group"><label>Email *</label><input type="email" placeholder="your@email.com" required>
+            </div>
+          </div>
+          <div class="form-row two">
+            <div class="form-group"><label>Phone</label><input type="tel" placeholder="+1 (555) 000-0000"></div>
+            <div class="form-group"><label>Subject *</label>
+              <select required>
+                <option value="">Select topic…</option>
+                <option>Track a Shipment</option>
+                <option>Get a Quote</option>
+                <option>Open a Business Account</option>
+                <option>File a Claim</option>
+                <option>General Enquiry</option>
+                <option>Press / Media</option>
+                <option>Careers</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group"><label>Tracking Number (if applicable)</label><input type="text"
+              placeholder="e.g. GCSC-2025-ABC123"></div>
+          <div class="form-group"><label>Message *</label><textarea rows="5" placeholder="Tell us how we can help…"
+              required></textarea></div>
+          <button type="submit" class="btn-primary btn-full">Send Message →</button>
+        </form>
+      </div>
+      <aside class="info-sidebar">
+        <div class="sidebar-card accent-card">
+          <div class="sc-icon">📞</div>
+          <div class="sc-title">Call Us 24/7</div>
+          <div class="sc-desc">Speak directly with a US freight specialist anytime, day or night.</div>
+          <a href="tel:+18005424678" class="btn-primary">1-800-GCSC-HUB</a>
+        </div>
+        <div class="sidebar-card">
+          <div class="sc-title">✉ Email Support</div>
+          <div class="sc-desc"><a href="mailto:support@globalcargo360.com"
+              style="color:var(--navy);font-weight:600">support@globalcargo360.com</a><br><span
+              style="font-size:.78rem;color:var(--text-l)">Response within 2 business hours</span></div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sc-title">🏢 US Headquarters</div>
+          <div class="sc-desc">One World Trade Center, Suite 8500<br>New York, NY 10007<br>United States</div>
+        </div>
+        <div class="sidebar-card">
+          <div class="sc-title">Regional US Offices</div>
+          <ul class="check-list" style="margin-top:4px">
+            <li>📍 New York, NY (HQ)</li>
+            <li>📍 Los Angeles, CA</li>
+            <li>📍 Chicago, IL</li>
+            <li>📍 Houston, TX</li>
+            <li>📍 Miami, FL</li>
+            <li>📍 Atlanta, GA</li>
+            <li>📍 Seattle, WA</li>
+            <li>📍 Dallas, TX</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+  <div id="gcsc-footer"></div>
+  <div class="toast" id="toast"></div>
+  <script src="config.js"></script>
+<script src="chat-widget.js"></script>
+  <script src="nav.js"></script>
+  <script>
+    function showToast(m) { const t = document.getElementById('toast'); t.textContent = m; t.className = 'toast toast-visible'; setTimeout(() => t.classList.remove('toast-visible'), 3400) }
+    function sendMsg(e) { e.preventDefault(); showToast('✓ Message sent! We\'ll reply within 2 hours.'); e.target.reset() }
+  </script>
+</body>
+
+</html>

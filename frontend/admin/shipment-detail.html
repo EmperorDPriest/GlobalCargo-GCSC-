@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shipment Detail — Global Cargo Shipping Company Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="../assets/images/logos/logo.webp">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --bg: #F5F5F5;
+      --surface: #FFFFFF;
+      --surface-2: #F5F5F5;
+      --surface-3: #EEEEEE;
+      --border: #E0E0E0;
+      --border-accent: rgba(26, 58, 138, 0.3);
+      --accent: #1A3A8A;
+      --accent-dim: rgba(26, 58, 138, 0.06);
+      --text-1: #1A1A1A;
+      --text-2: #666666;
+      --text-3: #999999;
+      --red: #ef4444;
+      --sidebar-w: 250px;
+      --font-d: 'Oswald', 'Arial Narrow', sans-serif;
+      --font-b: 'Source Sans 3', Arial, sans-serif;
+      --ease: all 0.2s ease;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--text-1);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+
+    .sb-brand {
+      background: #1A3A8A;
+      padding: 22px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sb-mark {
+      width: 38px;
+      height: 38px;
+      background: #1A3A8A;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 20px rgba(0, 212, 170, 0.2);
+      flex-shrink: 0;
+    }
+
+    .sb-name {
+      font-family: var(--font-d);
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
+    }
+
+    .sb-name em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .sb-nav {
+      flex: 1;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-section {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-3);
+      padding: 10px 10px 4px;
+      margin-top: 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--ease);
+      text-decoration: none;
+      color: var(--text-2);
+      font-size: 0.88rem;
+      font-weight: 500;
+      border: 1px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: var(--surface-2);
+      color: var(--text-1);
+    }
+
+    .nav-icon {
+      font-size: 0.95rem;
+      width: 18px;
+      flex-shrink: 0;
+    }
+
+    .sb-footer {
+      padding: 14px 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--text-2);
+      font-family: var(--font-b);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: var(--ease);
+    }
+
+    .logout-btn:hover {
+      color: var(--red);
+      border-color: rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.06);
+    }
+
+    /* Main */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topbar-title {
+      font-family: var(--font-d);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-b);
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: var(--ease);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: #1A3A8A;
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+
+    .btn-secondary {
+      background: var(--surface-3);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      color: var(--text-1);
+      border-color: var(--border-accent);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.09);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.18);
+    }
+
+    /* Content */
+    .content {
+      padding: 24px 28px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .col-left,
+    .col-right {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-title {
+      font-family: var(--font-d);
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-2);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .card-body {
+      padding: 18px 20px;
+    }
+
+    /* Info rows */
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      gap: 16px;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-size: 0.78rem;
+      color: var(--text-3);
+      flex-shrink: 0;
+    }
+
+    .info-value {
+      font-size: 0.84rem;
+      font-weight: 500;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    /* Status hero */
+    .status-hero {
+      text-align: center;
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-tracking {
+      font-family: var(--font-d);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    /* Map */
+    #adminMap {
+      height: 250px;
+    }
+
+    /* Timeline */
+    .tl-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .tl-item:last-child {
+      border-bottom: none;
+    }
+
+    .tl-dot-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding-top: 3px;
+    }
+
+    .tl-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--text-3);
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .tl-item:first-child .tl-dot {
+      background: var(--accent);
+      border-color: rgba(0, 212, 170, 0.5);
+      box-shadow: 0 0 8px rgba(0, 212, 170, 0.4);
+    }
+
+    .tl-line {
+      width: 1px;
+      flex: 1;
+      background: var(--border);
+      min-height: 10px;
+    }
+
+    .tl-content {
+      flex: 1;
+    }
+
+    .tl-time {
+      font-size: 0.72rem;
+      color: var(--text-3);
+      margin-bottom: 3px;
+    }
+
+    .tl-status {
+      font-weight: 700;
+      font-size: 0.86rem;
+      margin-bottom: 2px;
+    }
+
+    .tl-location {
+      font-size: 0.78rem;
+      color: var(--text-2);
+    }
+
+    .tl-desc {
+      font-size: 0.78rem;
+      color: var(--text-3);
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+
+    .tl-delete {
+      background: none;
+      border: none;
+      color: var(--text-3);
+      cursor: pointer;
+      font-size: 0.75rem;
+      padding: 3px 6px;
+      border-radius: 5px;
+      transition: var(--ease);
+      margin-left: auto;
+      align-self: flex-start;
+      flex-shrink: 0;
+    }
+
+    .tl-delete:hover {
+      color: var(--red);
+      background: rgba(239, 68, 68, 0.08);
+    }
+
+    /* Contact grid */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 2px solid rgba(255, 255, 255, 0.07);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 60px auto;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Modals */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7);
+      animation: modalIn 0.25s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(0.96) translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .modal-head {
+      padding: 22px 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-family: var(--font-d);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-2);
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 4px 6px;
+      border-radius: 6px;
+      transition: var(--ease);
+    }
+
+    .modal-close:hover {
+      color: var(--text-1);
+      background: var(--surface-3);
+    }
+
+    .modal-body {
+      padding: 20px 24px 24px;
+    }
+
+    .fg {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .fl {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .fi,
+    .fs,
+    .fta {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--text-1);
+      font-family: var(--font-b);
+      font-size: 0.9rem;
+      padding: 10px 13px;
+      outline: none;
+      transition: var(--ease);
+      width: 100%;
+    }
+
+    .fi:focus,
+    .fs:focus,
+    .fta:focus {
+      border-color: var(--border-accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .fi::placeholder,
+    .fta::placeholder {
+      color: var(--text-3);
+    }
+
+    .fta {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.86rem;
+      z-index: 9999;
+      transform: translateY(12px);
+      opacity: 0;
+      transition: all 0.25s ease;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .toast.toast-visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast-success {
+      border-color: rgba(0, 212, 170, 0.3);
+    }
+
+    .toast-error {
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .toast-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+
+    .toast-success .toast-icon {
+      background: rgba(0, 212, 170, 0.15);
+      color: var(--accent);
+    }
+
+    .toast-error .toast-icon {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+    }
+
+    @media (max-width: 1024px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Mobile sidebar */
+    .menu-btn {
+      display: none;
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      color: var(--text-1);
+      border-radius: 8px;
+      width: 38px;
+      height: 38px;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .sb-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(3px);
+      z-index: 99;
+    }
+
+    .sb-overlay.show {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .menu-btn {
+        display: flex;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.28s cubic-bezier(.4, 0, .2, 1);
+        z-index: 200;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .topbar {
+        height: auto;
+        padding: 10px 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      .topbar-top-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .topbar-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 6px;
+        width: 100%;
+      }
+
+      .topbar-actions .btn {
+        justify-content: center;
+        font-size: 0.73rem;
+        padding: 8px 4px;
+        white-space: nowrap;
+      }
+
+      .content {
+        padding: 12px;
+      }
+
+      #adminMap {
+        height: 200px;
+      }
+
+      .card-body {
+        padding: 14px 16px;
+      }
+
+      .info-row {
+        gap: 8px;
+      }
+
+      .info-value {
+        font-size: 0.82rem;
+      }
+
+      .tl-content {
+        min-width: 0;
+      }
+
+      .toast {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .topbar-actions {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+
+      <img src="../assets/images/logos/logo_transparent.webp" alt="GCSC"
+        style="height:44px;width:auto;object-fit:contain;display:block">
+      <div class="sb-name"
+        style="font-size:.78rem;color:var(--text-2);margin-top:4px;letter-spacing:.08em;text-transform:uppercase">Admin
+        Portal</div>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-section">Main</div>
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span> Dashboard</a>
+      <a href="create.html" class="nav-item"><span class="nav-icon">➕</span> New Shipment</a>
+      <div class="nav-section">Tools</div>
+      <a href="../index.html" target="_blank" class="nav-item"><span class="nav-icon">🔍</span> Tracking Page</a>
+    </nav>
+    <div class="sb-footer">
+      <button class="logout-btn" onclick="removeToken(); window.location.href='login.html'">🚪 Sign Out</button>
+    </div>
+  </aside>
+
+  <div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-top-row">
+        <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+        <div class="topbar-title" id="topbarTitle"
+          style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1;">Shipment Detail</div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary" onclick="openStatusModal()">✏️ Status</button>
+        <button class="btn btn-secondary" onclick="openLocationModal()">📍 Location</button>
+        <button id="archiveBtn" class="btn btn-secondary" onclick="toggleArchive()">📁 Archive</button>
+        <button class="btn btn-danger" onclick="confirmDeleteShipment()">🗑️ Delete</button>
+        <a href="dashboard.html" class="btn btn-secondary">← Back</a>
+      </div>
+    </div>
+
+    <div class="content" id="pageContent">
+      <div class="spinner"></div>
+    </div>
+  </main>
+
+  <!-- STATUS MODAL -->
+  <div class="modal-overlay" id="statusModal">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">Update Status</div>
+        <button class="modal-close" onclick="closeModal('statusModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="statusForm" onsubmit="submitStatus(event)">
+          <div class="fg">
+            <label class="fl">New Status</label>
+            <select class="fs" id="sNewStatus" required>
+              <option>Pending</option>
+              <option>Processing</option>
+              <option>In Transit</option>
+              <option>Out for Delivery</option>
+              <option>Delivered</option>
+              <option>Exception</option>
+              <option>On Hold</option>
+              <option>Returned</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="fl">Location</label>
+            <input class="fi" id="sLocation" type="text" placeholder="e.g. Lagos Airport, Nigeria" required />
+          </div>
+          <div class="fg">
+            <label class="fl">Description</label>
+            <textarea class="fta" id="sDesc" placeholder="Describe what happened..." required></textarea>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('statusModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="statusSubmit">Update Status</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOCATION MODAL -->
+  <div class="modal-overlay" id="locationModal">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title">Update Map Location</div>
+        <button class="modal-close" onclick="closeModal('locationModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="locationForm" onsubmit="submitLocation(event)">
+          <p style="font-size:0.8rem;color:var(--text-2);margin-bottom:14px;">Find coordinates at <a
+              href="https://www.latlong.net" target="_blank" style="color:var(--accent)">latlong.net</a></p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="fg">
+              <label class="fl">Latitude</label>
+              <input class="fi" id="lLat" type="number" step="any" min="-90" max="90" placeholder="51.5074" required />
+            </div>
+            <div class="fg">
+              <label class="fl">Longitude</label>
+              <input class="fi" id="lLng" type="number" step="any" min="-180" max="180" placeholder="-0.1278"
+                required />
+            </div>
+          </div>
+          <div class="fg">
+            <label class="fl">Address Label</label>
+            <input class="fi" id="lAddress" type="text" placeholder="e.g. London Heathrow Airport, UK" />
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('locationModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Update Location</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="../config.js"></script>
+  <script>
+    if (!getToken()) { window.location.href = 'login.html'; }
+
+    const shipmentId = new URLSearchParams(window.location.search).get('id');
+    let shipment = null, adminMap = null, adminMarker = null;
+
+    if (!shipmentId) window.location.href = 'dashboard.html';
+
+    async function loadShipment() {
+      try {
+        // FIX: /shipments/:id works after server.js route fix
+        const data = await apiRequest(`/admin/shipments/${shipmentId}`);
+        shipment = data.shipment;
+        renderDetail();
+      } catch (e) {
+        document.getElementById('pageContent').innerHTML = `
+          <div style="text-align:center;padding:60px;color:var(--text-2)">
+            <div style="font-size:2.5rem;margin-bottom:12px">⚠️</div>
+            <div style="font-family:var(--font-d);font-size:1rem;margin-bottom:8px">Shipment not found</div>
+            <a href="dashboard.html" style="color:var(--accent)">← Back to Dashboard</a>
+          </div>`;
+      }
+    }
+
+    function renderDetail() {
+      const sc = getStatusConfig(shipment.status);
+      document.getElementById('topbarTitle').textContent = shipment.trackingNumber;
+      document.getElementById('archiveBtn').textContent = shipment.isArchived ? '📤 Unarchive' : '📁 Archive';
+
+      document.getElementById('pageContent').innerHTML = `
+        <div class="detail-grid">
+          <div class="col-left">
+
+            <!-- Sender / Receiver -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">👤 Parties</div>
+                <a href="../index.html?track=${shipment.trackingNumber}" target="_blank" class="btn btn-secondary">🔍 Public Tracking</a>
+              </div>
+              <div class="card-body">
+                <div class="contact-grid">
+                  <div>
+                    <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-3);margin-bottom:10px;font-weight:600;">📤 Sender</div>
+                    ${renderRows([
+        ['Name', shipment.sender.name],
+        ['City', shipment.sender.city],
+        ['Country', shipment.sender.country],
+        ...(shipment.sender.email ? [['Email', shipment.sender.email]] : []),
+        ...(shipment.sender.phone ? [['Phone', shipment.sender.phone]] : []),
+      ])}
+                  </div>
+                  <div>
+                    <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-3);margin-bottom:10px;font-weight:600;">📥 Receiver</div>
+                    ${renderRows([
+        ['Name', shipment.receiver.name],
+        ['City', shipment.receiver.city],
+        ['Country', shipment.receiver.country],
+        ...(shipment.receiver.email ? [['Email', shipment.receiver.email]] : []),
+        ...(shipment.receiver.phone ? [['Phone', shipment.receiver.phone]] : []),
+      ])}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Shipment Details -->
+            <div class="card">
+              <div class="card-header"><div class="card-title">📋 Details</div></div>
+              <div class="card-body">
+                ${renderRows([
+        ['Description', shipment.packageInfo?.description || shipment.description || '—'],
+        ['Service', shipment.service || shipment.packageInfo?.service || 'Standard'],
+        ['Origin', shipment.origin || '—'],
+        ['Destination', shipment.destination || '—'],
+        ['Weight', shipment.packageInfo?.weight || '—'],
+        ['Dimensions', shipment.packageInfo?.dimensions || '—'],
+        ['Est. Delivery', shipment.estimatedDelivery ? formatDate(shipment.estimatedDelivery) : 'Not set'],
+        ['Created', formatDateTime(shipment.createdAt)],
+        ['Updated', formatDateTime(shipment.updatedAt)],
+        ['Archived', shipment.isArchived ? 'Yes' : 'No'],
+        ...(shipment.adminNotes ? [['Admin Notes', shipment.adminNotes]] : []),
+      ])}
+              </div>
+            </div>
+
+            <!-- Map -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">🌍 Current Location</div>
+                <button class="btn btn-secondary" onclick="openLocationModal()">📍 Update</button>
+              </div>
+              <div id="adminMap"></div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">🕒 Timeline</div>
+                <button class="btn btn-secondary" onclick="openStatusModal()">➕ Add Entry</button>
+              </div>
+              <div class="card-body" id="timelineList">
+                ${renderTimeline(shipment.timeline)}
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-right">
+
+            <!-- Status card -->
+            <div class="card">
+              <div class="status-hero">
+                <div class="hero-tracking">${shipment.trackingNumber}</div>
+                <div class="status-badge" style="background:${sc.bg};color:${sc.color}">${sc.icon} ${sc.label}</div>
+              </div>
+              <div class="card-body">
+                <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="openStatusModal()">✏️ Update Status</button>
+              </div>
+            </div>
+
+            <!-- Map pin info -->
+            <div class="card">
+              <div class="card-header"><div class="card-title">📍 Map Pin</div></div>
+              <div class="card-body">
+                ${renderRows([
+        ['Latitude', shipment.currentLocation?.lat ?? '—'],
+        ['Longitude', shipment.currentLocation?.lng ?? '—'],
+        ['Address', shipment.currentLocation?.name || '—'],
+      ])}
+                <button class="btn btn-secondary" style="width:100%;justify-content:center;margin-top:12px;" onclick="openLocationModal()">📍 Update Location</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      `;
+
+      setTimeout(() => initMap(), 100);
+    }
+
+    function renderRows(rows) {
+      return rows.map(([l, v]) => `
+        <div class="info-row">
+          <span class="info-label">${l}</span>
+          <span class="info-value">${v}</span>
+        </div>`).join('');
+    }
+
+    function renderTimeline(events) {
+      if (!events || events.length === 0) return '<p style="color:var(--text-3);font-size:0.84rem;text-align:center;padding:16px 0;">No events yet. Update status to add the first entry.</p>';
+      // Sort newest first
+      const sorted = [...events].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      return sorted.map((ev, i) => `
+        <div class="tl-item">
+          <div class="tl-dot-wrap">
+            <div class="tl-dot"></div>
+            ${i < sorted.length - 1 ? '<div class="tl-line"></div>' : ''}
+          </div>
+          <div class="tl-content">
+            <div class="tl-time">${formatDateTime(ev.timestamp)}</div>
+            <div class="tl-status">${ev.status}</div>
+            <div class="tl-location">📍 ${ev.location}</div>
+            ${ev.description ? `<div class="tl-desc">${ev.description}</div>` : ''}
+          </div>
+          <button class="tl-delete" onclick="deleteTimelineEntry('${ev._id}')" title="Remove entry">✕</button>
+        </div>`).join('');
+    }
+
+    function initMap() {
+      const loc = shipment.currentLocation || {};
+      const lat = loc.lat || 0, lng = loc.lng || 0;
+      const mapEl = document.getElementById('adminMap');
+      if (!mapEl) return;
+
+      if (!adminMap) {
+        adminMap = L.map('adminMap').setView([lat, lng], 10);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+          attribution: '© OpenStreetMap © CARTO', maxZoom: 19
+        }).addTo(adminMap);
+        setTimeout(() => adminMap.invalidateSize(), 150);
+      } else {
+        adminMap.setView([lat, lng], 10);
+        if (adminMarker) adminMarker.remove();
+        setTimeout(() => adminMap.invalidateSize(), 150);
+      }
+
+      const icon = L.divIcon({
+        html: `<div style="width:26px;height:26px;background:var(--accent);border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid white;box-shadow:0 2px 10px rgba(0,212,170,0.5)"></div>`,
+        className: '', iconSize: [26, 26], iconAnchor: [13, 26]
+      });
+
+      adminMarker = L.marker([lat, lng], { icon })
+        .addTo(adminMap)
+        .bindPopup(`<b>📍 ${loc.address || 'Current Location'}</b><br>Lat: ${lat}, Lng: ${lng}`)
+        .openPopup();
+    }
+
+    // STATUS MODAL — FIX: PATCH
+    function openStatusModal() {
+      document.getElementById('sNewStatus').value = shipment.status;
+      document.getElementById('sLocation').value = shipment.currentLocation?.name || '';
+      document.getElementById('sDesc').value = '';
+      document.getElementById('statusModal').classList.add('active');
+    }
+
+    async function submitStatus(e) {
+      e.preventDefault();
+      const btn = document.getElementById('statusSubmit');
+      setLoading(btn, true);
+      try {
+        const data = await apiRequest(`/admin/shipments/${shipmentId}/status`, {
+          method: 'PATCH', // FIX: was PUT
+          body: JSON.stringify({
+            status: document.getElementById('sNewStatus').value,
+            location: document.getElementById('sLocation').value,
+            description: document.getElementById('sDesc').value
+          })
+        });
+        shipment = data.shipment;
+        closeModal('statusModal');
+        renderDetail();
+        showToast('Status updated!', 'success');
+      } catch (err) {
+        showToast(err.message || 'Failed to update', 'error');
+      } finally {
+        setLoading(btn, false);
+      }
+    }
+
+    // LOCATION MODAL — FIX: PATCH + correct body field 'name'
+    function openLocationModal() {
+      document.getElementById('lLat').value = shipment.currentLocation?.lat || '';
+      document.getElementById('lLng').value = shipment.currentLocation?.lng || '';
+      document.getElementById('lAddress').value = shipment.currentLocation?.name || '';
+      document.getElementById('locationModal').classList.add('active');
+    }
+
+    async function submitLocation(e) {
+      e.preventDefault();
+      try {
+        const data = await apiRequest(`/admin/shipments/${shipmentId}/location`, {
+          method: 'PATCH', // FIX: was PUT
+          body: JSON.stringify({
+            name: document.getElementById('lAddress').value, // FIX: backend expects 'name' not 'address'
+            lat: parseFloat(document.getElementById('lLat').value),
+            lng: parseFloat(document.getElementById('lLng').value)
+          })
+        });
+        shipment = data.shipment;
+        closeModal('locationModal');
+        renderDetail();
+        showToast('Location updated!', 'success');
+      } catch (err) {
+        showToast(err.message || 'Failed to update location', 'error');
+      }
+    }
+
+    // TIMELINE DELETE — FIX: use ev._id not array index
+    async function deleteTimelineEntry(eventId) {
+      if (!confirm('Remove this timeline entry?')) return;
+      try {
+        const data = await apiRequest(`/admin/shipments/${shipmentId}/timeline/${eventId}`, { method: 'DELETE' });
+        shipment = data.shipment;
+        document.getElementById('timelineList').innerHTML = renderTimeline(shipment.timeline);
+        showToast('Entry removed.', 'success');
+      } catch (err) {
+        showToast(err.message || 'Failed', 'error');
+      }
+    }
+
+    async function toggleArchive() {
+      try {
+        const data = await apiRequest(`/admin/shipments/${shipmentId}/archive`, { method: 'PATCH' });
+        shipment.isArchived = data.shipment?.isArchived;
+        document.getElementById('archiveBtn').textContent = shipment.isArchived ? '📤 Unarchive' : '📁 Archive';
+        showToast(`Shipment ${shipment.isArchived ? 'archived' : 'unarchived'}.`, 'success');
+      } catch (err) {
+        showToast(err.message || 'Failed', 'error');
+      }
+    }
+
+    function confirmDeleteShipment() {
+      if (!confirm(`Permanently delete ${shipment?.trackingNumber}? This cannot be undone.`)) return;
+      apiRequest(`/admin/shipments/${shipmentId}`, { method: 'DELETE' })
+        .then(() => { showToast('Shipment deleted.', 'success'); setTimeout(() => window.location.href = 'dashboard.html', 1000); })
+        .catch(err => showToast(err.message || 'Failed', 'error'));
+    }
+
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sbOverlay').classList.toggle('show');
+    }
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sbOverlay').classList.remove('show');
+    }
+
+    document.querySelectorAll('.modal-overlay').forEach(o => {
+      o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
+    });
+
+    loadShipment();
+  </script>
+</body>
+
+</html>

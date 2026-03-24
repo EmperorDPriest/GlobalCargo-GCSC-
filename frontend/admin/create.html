@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Shipment — Global Cargo Shipping Company Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="../assets/images/logos/logo.webp">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F5F5F5;
+      --surface: #FFFFFF;
+      --surface-2: #F5F5F5;
+      --surface-3: #EEEEEE;
+      --border: #E0E0E0;
+      --border-accent: rgba(26, 58, 138, 0.3);
+      --accent: #1A3A8A;
+      --accent-dim: rgba(26, 58, 138, 0.06);
+      --text-1: #1A1A1A;
+      --text-2: #666666;
+      --text-3: #999999;
+      --red: #ef4444;
+      --sidebar-w: 250px;
+      --font-d: 'Oswald', 'Arial Narrow', sans-serif;
+      --font-b: 'Source Sans 3', Arial, sans-serif;
+      --ease: all 0.2s ease;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--text-1);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+
+    .sb-brand {
+      background: #1A3A8A;
+      padding: 22px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sb-mark {
+      width: 38px;
+      height: 38px;
+      background: #1A3A8A;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 20px rgba(0, 212, 170, 0.2);
+      flex-shrink: 0;
+    }
+
+    .sb-name {
+      font-family: var(--font-d);
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
+    }
+
+    .sb-name em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .sb-nav {
+      flex: 1;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-section {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-3);
+      padding: 10px 10px 4px;
+      margin-top: 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--ease);
+      text-decoration: none;
+      color: var(--text-2);
+      font-size: 0.88rem;
+      font-weight: 500;
+      border: 1px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: var(--surface-2);
+      color: var(--text-1);
+    }
+
+    .nav-item.active {
+      background: var(--accent-dim);
+      color: var(--accent);
+      border-color: var(--border-accent);
+    }
+
+    .nav-icon {
+      font-size: 0.95rem;
+      width: 18px;
+      flex-shrink: 0;
+    }
+
+    .sb-footer {
+      padding: 14px 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--text-2);
+      font-family: var(--font-b);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: var(--ease);
+    }
+
+    .logout-btn:hover {
+      color: var(--red);
+      border-color: rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.06);
+    }
+
+    /* Main */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-title {
+      font-family: var(--font-d);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border-radius: 9px;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-b);
+      font-size: 0.84rem;
+      font-weight: 600;
+      transition: var(--ease);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #1A3A8A;
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: var(--surface-3);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      color: var(--text-1);
+      border-color: var(--border-accent);
+    }
+
+    /* Content */
+    .content {
+      padding: 28px;
+      max-width: 900px;
+    }
+
+    .page-head {
+      margin-bottom: 24px;
+    }
+
+    .page-title {
+      font-family: var(--font-d);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .page-sub {
+      font-size: 0.85rem;
+      color: var(--text-2);
+      margin-top: 4px;
+    }
+
+    /* Form cards */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 3px solid #F47920;
+    }
+
+    .section-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-family: var(--font-d);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-label {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .req {
+      color: var(--red);
+      margin-left: 2px;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--text-1);
+      font-family: var(--font-b);
+      font-size: 0.9rem;
+      padding: 10px 13px;
+      outline: none;
+      transition: var(--ease);
+      width: 100%;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--border-accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--text-3);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-select option {
+      background: var(--surface-2);
+    }
+
+    /* Form footer */
+    .form-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      padding-top: 4px;
+    }
+
+    /* Success card */
+    .success-card {
+      display: none;
+      background: var(--surface);
+      border: 1px solid rgba(0, 212, 170, 0.3);
+      border-radius: 16px;
+      padding: 48px 32px;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(0, 212, 170, 0.08);
+    }
+
+    .success-card.visible {
+      display: block;
+    }
+
+    .success-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .success-title {
+      font-family: var(--font-d);
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .success-sub {
+      font-size: 0.88rem;
+      color: var(--text-2);
+      margin-bottom: 24px;
+    }
+
+    .tracking-display {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-accent);
+      border-radius: 12px;
+      padding: 14px 22px;
+      margin-bottom: 24px;
+      cursor: pointer;
+      transition: var(--ease);
+    }
+
+    .tracking-display:hover {
+      background: var(--surface-3);
+    }
+
+    .tracking-num {
+      font-family: var(--font-d);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .copy-hint {
+      font-size: 0.75rem;
+      color: var(--text-3);
+    }
+
+    .success-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.86rem;
+      z-index: 9999;
+      transform: translateY(12px);
+      opacity: 0;
+      transition: all 0.25s ease;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .toast.toast-visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast-success {
+      border-color: rgba(0, 212, 170, 0.3);
+    }
+
+    .toast-error {
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .toast-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+
+    .toast-success .toast-icon {
+      background: rgba(0, 212, 170, 0.15);
+      color: var(--accent);
+    }
+
+    .toast-error .toast-icon {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+    }
+
+    /* Mobile sidebar */
+    .menu-btn {
+      display: none;
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      color: var(--text-1);
+      border-radius: 8px;
+      width: 38px;
+      height: 38px;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .sb-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(3px);
+      z-index: 99;
+    }
+
+    .sb-overlay.show {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .menu-btn {
+        display: flex;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.28s cubic-bezier(.4, 0, .2, 1);
+        z-index: 200;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .topbar {
+        padding: 0 12px;
+      }
+
+      .topbar .btn-secondary {
+        padding: 7px 10px;
+        font-size: 0.78rem;
+      }
+
+      .content {
+        padding: 12px;
+        max-width: 100%;
+      }
+
+      .page-head {
+        margin-bottom: 16px;
+      }
+
+      .page-title {
+        font-size: 1.15rem;
+      }
+
+      .page-sub {
+        font-size: 0.8rem;
+      }
+
+      .form-card {
+        padding: 16px 14px;
+        margin-bottom: 12px;
+      }
+
+      .section-title {
+        font-size: 0.88rem;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .form-label {
+        font-size: 0.7rem;
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        font-size: 0.88rem;
+        padding: 10px 11px;
+      }
+
+      .form-actions {
+        flex-direction: column-reverse;
+        gap: 8px;
+      }
+
+      .form-actions .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+        font-size: 0.88rem;
+      }
+
+      .success-card {
+        padding: 28px 16px;
+      }
+
+      .success-title {
+        font-size: 1.2rem;
+      }
+
+      .tracking-display {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 16px;
+      }
+
+      .tracking-num {
+        font-size: 1.1rem;
+      }
+
+      .success-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+
+      .success-actions .btn {
+        justify-content: center;
+        padding: 12px;
+      }
+
+      .toast {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+
+      <img src="../assets/images/logos/logo_transparent.webp" alt="GCSC"
+        style="height:44px;width:auto;object-fit:contain;display:block">
+      <div class="sb-name"
+        style="font-size:.78rem;color:var(--text-2);margin-top:4px;letter-spacing:.08em;text-transform:uppercase">Admin
+        Portal</div>
+    </div>
+    <nav class="sb-nav">
+      <div class="nav-section">Main</div>
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">📊</span> Dashboard</a>
+      <a href="create.html" class="nav-item active"><span class="nav-icon">➕</span> New Shipment</a>
+      <div class="nav-section">Tools</div>
+      <a href="../index.html" target="_blank" class="nav-item"><span class="nav-icon">🔍</span> Tracking Page</a>
+    </nav>
+    <div class="sb-footer">
+      <button class="logout-btn" onclick="removeToken(); window.location.href='login.html'">🚪 Sign Out</button>
+    </div>
+  </aside>
+
+  <div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
+
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="menu-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+        <div class="topbar-title">New Shipment</div>
+      </div>
+      <a href="dashboard.html" class="btn btn-secondary">← Back</a>
+    </div>
+
+    <div class="content">
+      <div class="page-head">
+        <div class="page-title">Create Shipment</div>
+        <div class="page-sub">Fill in all required fields to generate a tracking number.</div>
+      </div>
+
+      <!-- SUCCESS CARD -->
+      <div class="success-card" id="successCard">
+        <div class="success-icon">🎉</div>
+        <div class="success-title">Shipment Created!</div>
+        <div class="success-sub">Your tracking number has been generated. Share it with the customer.</div>
+        <div class="tracking-display" onclick="copyTrackingNumber()" title="Click to copy">
+          <div>
+            <div class="tracking-num" id="generatedTrackingNumber">—</div>
+            <div class="copy-hint">Click to copy</div>
+          </div>
+          <span style="font-size:1.1rem">📋</span>
+        </div>
+        <div class="success-actions">
+          <a id="viewTrackingLink" href="#" target="_blank" class="btn btn-secondary">🔍 View Tracking Page</a>
+          <button onclick="createAnother()" class="btn btn-primary">➕ Create Another</button>
+          <a href="dashboard.html" class="btn btn-secondary">📊 Go to Dashboard</a>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <form id="createForm" onsubmit="handleSubmit(event)">
+
+        <!-- Package Info -->
+        <div class="form-card">
+          <div class="section-head">
+            <div class="section-icon" style="background:rgba(0,212,170,0.1);color:var(--accent)">📦</div>
+            <div class="section-title">Package Information</div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label class="form-label">Description <span class="req">*</span></label>
+              <input class="form-input" name="packageInfo.description" type="text"
+                placeholder="e.g. Electronics - Laptop Computer" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Service Type</label>
+              <select class="form-select" name="service">
+                <option value="Standard">Standard Shipping</option>
+                <option value="Express">Express Shipping</option>
+                <option value="Overnight">Overnight Delivery</option>
+                <option value="Economy">Economy Shipping</option>
+                <option value="Freight">Freight</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Initial Status</label>
+              <select class="form-select" name="status">
+                <option value="Pending">Pending</option>
+                <option value="In Transit">In Transit</option>
+                <option value="Processing">Processing</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Weight</label>
+              <input class="form-input" name="packageInfo.weight" type="text" placeholder="e.g. 2.5 kg" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Dimensions</label>
+              <input class="form-input" name="packageInfo.dimensions" type="text" placeholder="e.g. 40 × 30 × 8 cm" />
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Estimated Delivery</label>
+              <input class="form-input" name="estimatedDelivery" type="date" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Route -->
+        <div class="form-card">
+          <div class="section-head">
+            <div class="section-icon" style="background:rgba(167,139,250,0.1);color:#a78bfa">🗺️</div>
+            <div class="section-title">Route</div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Origin <span class="req">*</span></label>
+              <input class="form-input" name="origin" type="text" placeholder="e.g. New York, USA" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Destination <span class="req">*</span></label>
+              <input class="form-input" name="destination" type="text" placeholder="e.g. London, UK" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- Sender -->
+        <div class="form-card">
+          <div class="section-head">
+            <div class="section-icon" style="background:rgba(59,130,246,0.1);color:#3b82f6">📤</div>
+            <div class="section-title">Sender Information</div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Full Name / Company <span class="req">*</span></label>
+              <input class="form-input" name="sender.name" type="text" placeholder="John Smith" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-input" name="sender.email" type="email" placeholder="sender@example.com" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input class="form-input" name="sender.phone" type="tel" placeholder="+1 555-000-0000" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">City <span class="req">*</span></label>
+              <input class="form-input" name="sender.city" type="text" placeholder="New York" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Country <span class="req">*</span></label>
+              <input class="form-input" name="sender.country" type="text" placeholder="United States" required />
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Address <span class="req">*</span></label>
+              <input class="form-input" name="sender.address" type="text" placeholder="123 Main Street, Suite 100"
+                required />
+            </div>
+          </div>
+        </div>
+
+        <!-- Receiver -->
+        <div class="form-card">
+          <div class="section-head">
+            <div class="section-icon" style="background:rgba(249,115,22,0.1);color:#f97316">📥</div>
+            <div class="section-title">Receiver Information</div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Full Name / Company <span class="req">*</span></label>
+              <input class="form-input" name="receiver.name" type="text" placeholder="Jane Doe" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-input" name="receiver.email" type="email" placeholder="receiver@example.com" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input class="form-input" name="receiver.phone" type="tel" placeholder="+44 20 7000 0000" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">City <span class="req">*</span></label>
+              <input class="form-input" name="receiver.city" type="text" placeholder="London" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Country <span class="req">*</span></label>
+              <input class="form-input" name="receiver.country" type="text" placeholder="United Kingdom" required />
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Address <span class="req">*</span></label>
+              <input class="form-input" name="receiver.address" type="text" placeholder="45 Baker Street" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- Initial Location -->
+        <div class="form-card">
+          <div class="section-head">
+            <div class="section-icon" style="background:rgba(0,212,170,0.1);color:var(--accent)">🌍</div>
+            <div class="section-title">Initial Map Location</div>
+          </div>
+          <p style="font-size:0.82rem;color:var(--text-2);margin-bottom:16px;line-height:1.6;">
+            Set the starting map pin. Use <a href="https://www.latlong.net" target="_blank"
+              style="color:var(--accent)">latlong.net</a> to find coordinates for any address.
+          </p>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Latitude <span class="req">*</span></label>
+              <input class="form-input" name="currentLocation.lat" type="number" step="any" min="-90" max="90"
+                placeholder="40.7128" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Longitude <span class="req">*</span></label>
+              <input class="form-input" name="currentLocation.lng" type="number" step="any" min="-180" max="180"
+                placeholder="-74.0060" required />
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Address Label</label>
+              <input class="form-input" name="currentLocation.address" type="text"
+                placeholder="e.g. New York Origin Facility, USA" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Admin Notes -->
+        <div class="form-card">
+          <div class="section-head">
+            <div class="section-icon" style="background:rgba(148,163,184,0.1);color:#94a3b8">🔒</div>
+            <div class="section-title">Admin Notes (Private)</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Internal Notes (not visible to customers)</label>
+            <textarea class="form-textarea" name="adminNotes"
+              placeholder="Special handling instructions, references, or internal notes..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <a href="dashboard.html" class="btn btn-secondary">Cancel</a>
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <span id="submitText">📦 Create Shipment</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+  <script src="../config.js"></script>
+  <script>
+    // INIT AUTH — skip verify on localhost
+    (async function initCreatePage() {
+      if (!getToken()) { window.location.href = 'login.html'; return; }
+      const isLocal = location.hostname === '127.0.0.1' || location.hostname === 'localhost';
+      if (!isLocal) {
+        try {
+          const data = await apiRequest('/auth/verify');
+          setAdmin(data.admin);
+        } catch {
+          removeToken();
+          window.location.href = 'login.html';
+        }
+      }
+    })();
+
+    // Parse dot-notation form names into nested object
+    function parseFormData(form) {
+      const data = {};
+      const fd = new FormData(form);
+      for (const [key, value] of fd.entries()) {
+        if (!value && value !== 0) continue;
+        const parts = key.split('.');
+        let cur = data;
+        for (let i = 0; i < parts.length - 1; i++) {
+          if (!cur[parts[i]]) cur[parts[i]] = {};
+          cur = cur[parts[i]];
+        }
+        const last = parts[parts.length - 1];
+        const num = parseFloat(value);
+        cur[last] = (last === 'lat' || last === 'lng') && !isNaN(num) ? num : value;
+      }
+      return data;
+    }
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const submitText = document.getElementById('submitText');
+      btn.disabled = true;
+      submitText.textContent = 'Creating...';
+      try {
+        const formData = parseFormData(e.target);
+        const data = await apiRequest('/admin/shipments', { method: 'POST', body: JSON.stringify(formData) });
+        const tn = data.shipment.trackingNumber;
+        document.getElementById('generatedTrackingNumber').textContent = tn;
+        document.getElementById('viewTrackingLink').href = `../index.html?track=${tn}`;
+        document.getElementById('createForm').style.display = 'none';
+        document.getElementById('successCard').classList.add('visible');
+        document.getElementById('successCard').scrollIntoView({ behavior: 'smooth' });
+      } catch (err) {
+        showToast(err.message || 'Failed to create shipment. Check all required fields.', 'error');
+        btn.disabled = false;
+        submitText.textContent = '📦 Create Shipment';
+      }
+    }
+
+    function copyTrackingNumber() {
+      const tn = document.getElementById('generatedTrackingNumber').textContent;
+      navigator.clipboard.writeText(tn).then(() => showToast('Tracking number copied!', 'success'));
+    }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sbOverlay').classList.toggle('show');
+    }
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sbOverlay').classList.remove('show');
+    }
+
+    function createAnother() {
+      document.getElementById('createForm').style.display = 'block';
+      document.getElementById('successCard').classList.remove('visible');
+      document.getElementById('createForm').reset();
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('submitText').textContent = '📦 Create Shipment';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+
+</html>

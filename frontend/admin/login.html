@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Global Cargo Shipping Company</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="../assets/images/logos/logo.webp">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F5F5F5;
+      --surface: #FFFFFF;
+      --surface-2: #F5F5F5;
+      --border: #E0E0E0;
+      --border-accent: #F47920;
+      --accent: #1A3A8A;
+      --accent-dim: rgba(26, 58, 138, 0.08);
+      --white: #ffffff;
+      --text-1: #1A1A1A;
+      --text-2: #666666;
+      --text-3: #999999;
+      --error: #F47920;
+      --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+      --font-body: 'Source Sans 3', Arial, sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: #F4F5F8;
+      color: #0F1F52;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    /* Layered ambient background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 20%, rgba(26, 58, 138, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 10% 80%, rgba(244, 121, 32, 0.07) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Subtle grid lines */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .login-wrap {
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Brand */
+    .brand {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 3px;
+      font-size: 24px;
+      margin-bottom: 14px;
+      box-shadow: 0 0 40px rgba(244, 121, 32, 0.25);
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .brand-name em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .brand-sub {
+      font-size: 0.8rem;
+      color: var(--text-3);
+      margin-top: 6px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 36px;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+    }
+
+    .card-head {
+      margin-bottom: 28px;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .card-sub {
+      font-size: 0.84rem;
+      color: var(--text-2);
+      margin-top: 4px;
+    }
+
+    /* Error */
+    .error-box {
+      display: none;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      border-radius: 3px;
+      color: #fca5a5;
+      font-size: 0.84rem;
+      padding: 11px 14px;
+      margin-bottom: 20px;
+    }
+
+    .error-box.show {
+      display: block;
+    }
+
+    /* Form */
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      background: #F4F5F8;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: #0F1F52;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 13px 44px 13px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--border-accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    input::placeholder {
+      color: var(--text-3);
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-3);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .input-icon:hover {
+      color: var(--accent);
+    }
+
+    /* Button */
+    .submit-btn {
+      width: 100%;
+      background: var(--accent);
+      color: var(--white);
+
+      border: none;
+      border-radius: 3px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      letter-spacing: 0.01em;
+      margin-top: 4px;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Footer */
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-link a {
+      color: var(--text-3);
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: color 0.2s;
+    }
+
+    .back-link a:hover {
+      color: var(--accent);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      z-index: 9999;
+      transform: translateY(12px);
+      opacity: 0;
+      transition: all 0.25s ease;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .toast.toast-visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast-success {
+      border-color: rgba(244, 121, 32, 0.3);
+    }
+
+    .toast-error {
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .toast-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+
+    .toast-success .toast-icon {
+      background: rgba(244, 121, 32, 0.15);
+      color: var(--accent);
+    }
+
+    .toast-error .toast-icon {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+    }
+
+    @media (max-width: 420px) {
+      body {
+        padding: 16px;
+        align-items: flex-start;
+        padding-top: 32px;
+      }
+
+      .card {
+        padding: 24px 20px;
+        border-radius: 3px;
+      }
+
+      .brand {
+        margin-bottom: 28px;
+      }
+
+      .brand-mark {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+        border-radius: 13px;
+      }
+
+      .brand-name {
+        font-size: 1.5rem;
+      }
+
+      .card-title {
+        font-size: 1.15rem;
+      }
+
+      input[type="email"],
+      input[type="password"],
+      input[type="text"] {
+        font-size: 1rem;
+        padding: 13px 44px 13px 12px;
+      }
+
+      .submit-btn {
+        padding: 14px;
+        font-size: 0.92rem;
+      }
+
+      .toast {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-wrap">
+    <div class="brand">
+      <img src="../assets/images/logos/logo_transparent.webp" alt="GCSC"
+        style="height:64px;width:auto;object-fit:contain;display:block;margin:0 auto 8px">
+      <div class="brand-name" style="font-size:1.3rem;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;">
+        <span style="color:#F47920;">Global Cargo</span> Shipping Co.
+      </div>
+      <div class="brand-sub">Admin Portal</div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Welcome back</div>
+        <div class="card-sub">Sign in to your admin dashboard</div>
+      </div>
+
+      <div class="error-box" id="errorBox"></div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="field">
+          <label for="email">Email Address</label>
+          <div class="input-wrap">
+            <input type="email" id="email" placeholder="admin@yourcompany.com" required autocomplete="email" />
+            <span class="input-icon">✉️</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password" />
+            <span class="input-icon" onclick="togglePwd()" title="Show/hide">👁️</span>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">Sign In →</button>
+      </form>
+    </div>
+
+    <div class="back-link">
+      <a href="../index.html">← Back to tracking page</a>
+    </div>
+  </div>
+
+  <script src="../config.js"></script>
+  <script>
+    // Redirect if already logged in (skip verify on localhost)
+    (async function () {
+      const token = getToken();
+      if (!token) return;
+      const isLocal = location.hostname === '127.0.0.1' || location.hostname === 'localhost';
+      if (isLocal) { window.location.href = 'dashboard.html'; return; }
+      try {
+        await apiRequest('/auth/verify');
+        window.location.href = 'dashboard.html';
+      } catch { removeToken(); }
+    })();
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('submitBtn');
+      const errorBox = document.getElementById('errorBox');
+      errorBox.classList.remove('show');
+      btn.disabled = true;
+      btn.textContent = 'Signing in...';
+      try {
+        const data = await apiRequest('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+        setToken(data.token);
+        setAdmin(data.admin);
+        showToast('Login successful!', 'success');
+        setTimeout(() => window.location.href = 'dashboard.html', 700);
+      } catch (err) {
+        errorBox.textContent = err.message || 'Login failed. Check your credentials.';
+        errorBox.classList.add('show');
+        btn.disabled = false;
+        btn.textContent = 'Sign In →';
+      }
+    }
+
+    function togglePwd() {
+      const input = document.getElementById('password');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</body>
+
+</html>

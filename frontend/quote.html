@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get a Quote — Global Cargo Shipping Company</title>
+  <meta name="description" content="Get an instant freight quote from Global Cargo Shipping Company. Air, ocean, road freight and parcel delivery to 198+ countries.">
+  <link rel="icon" type="image/png" href="assets/images/logos/logo.webp">
+  <meta property="og:title" content="Get a Shipping Quote — GCSC">
+  <meta property="og:image" content="assets/images/logos/logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="page-styles.css">
+</head>
+<body>
+<div id="gcsc-nav"></div>
+
+<!-- PAGE HERO -->
+<div class="page-hero" style="background-image:url('assets/images/site/gcsc-shipping-quote-hero.webp')">
+  <div class="ph-overlay"></div>
+  <div class="ph-inner">
+    <div class="ph-kicker">Services</div>
+    <h1 class="ph-title">Get an Instant Quote</h1>
+    <p class="ph-desc">Fast, transparent freight pricing with no hidden fees. Tell us about your shipment and we'll respond within 2 hours.</p>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar"><div class="bc-inner"><a href="../index.html">Home</a> <span>›</span> <span>Get a Quote</span></div></div>
+
+<!-- QUOTE FORM -->
+<section class="page-section">
+  <div class="page-inner two-col-layout">
+    <div class="form-panel">
+      <div class="section-label">Request a Freight Quote</div>
+      <h2 class="section-title">Tell Us About Your Shipment</h2>
+      <p class="section-desc">Fill out the form below and one of our freight specialists will contact you with a competitive, all-inclusive rate within 2 business hours.</p>
+
+      <form class="quote-form" onsubmit="submitQuote(event)">
+        <div class="form-row two">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" placeholder="John" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" placeholder="Smith" required>
+          </div>
+        </div>
+        <div class="form-row two">
+          <div class="form-group">
+            <label>Company Name</label>
+            <input type="text" placeholder="ACME Corp (optional)">
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" placeholder="john@company.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="form-divider"></div>
+        <div class="form-row two">
+          <div class="form-group">
+            <label>Service Type *</label>
+            <select required>
+              <option value="">Select service…</option>
+              <option>Express Air Freight</option>
+              <option>Economy Air Freight</option>
+              <option>FCL Ocean Freight</option>
+              <option>LCL Ocean Freight</option>
+              <option>US Domestic Road (FTL)</option>
+              <option>US Domestic Road (LTL)</option>
+              <option>Express Parcel Delivery</option>
+              <option>Customs Brokerage Only</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Shipment Type *</label>
+            <select required>
+              <option value="">Select type…</option>
+              <option>General Cargo</option>
+              <option>Hazardous Materials</option>
+              <option>Perishables / Food</option>
+              <option>Medical / Pharmaceuticals</option>
+              <option>Electronics</option>
+              <option>Automotive Parts</option>
+              <option>Personal Effects</option>
+              <option>Documents Only</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row two">
+          <div class="form-group">
+            <label>Origin (City / Country) *</label>
+            <input type="text" placeholder="New York, USA" required>
+          </div>
+          <div class="form-group">
+            <label>Destination (City / Country) *</label>
+            <input type="text" placeholder="London, UK" required>
+          </div>
+        </div>
+        <div class="form-row three">
+          <div class="form-group">
+            <label>Weight (lbs)</label>
+            <input type="number" placeholder="e.g. 250">
+          </div>
+          <div class="form-group">
+            <label>Dimensions (L×W×H, in)</label>
+            <input type="text" placeholder="e.g. 24×18×16">
+          </div>
+          <div class="form-group">
+            <label>No. of Pieces</label>
+            <input type="number" placeholder="e.g. 4">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Cargo Description</label>
+          <textarea rows="3" placeholder="Describe your goods (optional but helps us provide an accurate quote)…"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Additional Notes</label>
+          <textarea rows="2" placeholder="Special requirements, preferred shipping dates, etc."></textarea>
+        </div>
+        <button type="submit" class="btn-primary btn-full">Request Quote →</button>
+        <p class="form-note">✓ No commitment required &nbsp;·&nbsp; ✓ Replied within 2 business hours &nbsp;·&nbsp; ✓ 100% free</p>
+      </form>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="info-sidebar">
+      <div class="sidebar-card accent-card">
+        <div class="sc-icon">📞</div>
+        <div class="sc-title">Prefer to Talk?</div>
+        <div class="sc-desc">Our US freight specialists are available 24/7 to build a custom quote over the phone.</div>
+        <a href="tel:+18005424678" class="btn-primary">Call 1-800-GCSC-HUB</a>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-title">Why Choose GCSC?</div>
+        <ul class="check-list">
+          <li>✓ 35+ years industry expertise</li>
+          <li>✓ 198+ countries covered</li>
+          <li>✓ All-inclusive transparent pricing</li>
+          <li>✓ Dedicated account manager</li>
+          <li>✓ Real-time shipment tracking</li>
+          <li>✓ Fully insured cargo handling</li>
+          <li>✓ Licensed US customs brokers</li>
+        </ul>
+      </div>
+      <div class="sidebar-card">
+        <div class="sc-title">Services Available</div>
+        <div class="service-link-list">
+          <a href="air-freight.html">✈ Air Freight Express</a>
+          <a href="ocean-freight.html">🚢 Ocean Freight (FCL/LCL)</a>
+          <a href="road-freight.html">🚚 US Domestic Road</a>
+          <a href="express-parcel.html">📦 Express Parcel</a>
+          <a href="customs.html">🛃 Customs Brokerage</a>
+          <a href="warehousing.html">🏭 Warehousing & 3PL</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<div id="gcsc-footer"></div>
+<div class="toast" id="toast"></div>
+
+<script src="config.js"></script>
+<script src="chat-widget.js"></script>
+<script src="nav.js"></script>
+<script>
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.className='toast toast-visible';setTimeout(()=>t.classList.remove('toast-visible'),3400)}
+function submitQuote(e){e.preventDefault();showToast('✓ Quote request sent! We\'ll respond within 2 hours.');e.target.reset()}
+</script>
+</body>
+</html>

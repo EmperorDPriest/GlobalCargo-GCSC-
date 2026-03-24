@@ -1,0 +1,2680 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Cargo Shipping Company — America's Premier International Freight & Logistics Partner</title>
+  <meta name="description"
+    content="Global Cargo Shipping Company — Trusted by thousands of US businesses since 1990. International freight, air cargo, ocean shipping, and customs brokerage to 198+ countries.">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/logos/logo.webp">
+  <link rel="apple-touch-icon" href="assets/images/logos/logo.webp">
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://globalcargo360.com/">
+  <meta property="og:title" content="Global Cargo Shipping Company — America's Premier Freight & Logistics">
+  <meta property="og:description"
+    content="Trusted by thousands of US businesses since 1990. International freight, air cargo, ocean shipping, and customs brokerage to 198+ countries.">
+  <meta property="og:image" content="assets/images/logos/logo.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Global Cargo Shipping Company">
+  <meta name="twitter:description"
+    content="America's Premier International Freight & Logistics Partner — 198+ countries, 35+ years.">
+  <meta name="twitter:image" content="assets/images/logos/logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <style>
+    :root {
+      --navy: #1A3A8A;
+      --navy-d: #0F2557;
+      --navy-l: #2E5DB3;
+      --orange: #F47920;
+      --orange-d: #D4620F;
+      --orange-l: #FFF3E8;
+      --blue-m: #1E6FB4;
+      --blue-l: #E8F2FB;
+      --white: #fff;
+      --off-white: #F7F8FB;
+      --grey-bg: #F4F5F8;
+      --grey-bd: #E2E6EE;
+      --text-h: #0F1F52;
+      --text-b: #3A4468;
+      --text-m: #6B7491;
+      --text-l: #9BA3BC;
+      --font-d: 'Oswald', 'Arial Narrow', sans-serif;
+      --font-b: 'Source Sans 3', Arial, sans-serif;
+      --shadow-sm: 0 2px 8px rgba(10, 30, 90, .07);
+      --shadow-md: 0 6px 24px rgba(10, 30, 90, .11);
+      --shadow-lg: 0 16px 56px rgba(10, 30, 90, .15);
+      --radius: 4px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden
+    }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--white);
+      color: var(--text-b);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased
+    }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      background: var(--navy-d);
+      padding: 7px 0;
+      font-size: .72rem
+    }
+
+    .tb-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .tb-links {
+      display: flex;
+      gap: 20px;
+      align-items: center
+    }
+
+    .tb-links a {
+      color: #9DBADF;
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .tb-links a:hover {
+      color: var(--orange)
+    }
+
+    .tb-links span {
+      color: #3A5580
+    }
+
+    .tb-right {
+      display: flex;
+      align-items: center;
+      gap: 16px
+    }
+
+    .tb-flag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--white);
+      font-weight: 600
+    }
+
+    .tb-phone {
+      color: var(--orange);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: .74rem
+    }
+
+    .tb-phone:hover {
+      color: #FFB980
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background: var(--white);
+      box-shadow: 0 2px 16px rgba(10, 30, 90, .1)
+    }
+
+    .h-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      height: 76px;
+      gap: 20px
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+      margin-right: 8px
+    }
+
+    .logo img {
+      height: 72px;
+      width: auto;
+      max-width: 220px;
+      object-fit: contain
+    }
+
+    nav {
+      display: flex;
+      align-items: stretch;
+      flex: 1
+    }
+
+    .nav-list {
+      display: flex;
+      align-items: stretch;
+      list-style: none;
+      gap: 0
+    }
+
+    .ni {
+      position: relative;
+      display: flex;
+      align-items: stretch
+    }
+
+    .nl {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 14px;
+      font-family: var(--font-b);
+      font-weight: 600;
+      font-size: .88rem;
+      color: var(--text-b);
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      transition: all .2s;
+      cursor: pointer;
+      white-space: nowrap;
+      background: none
+    }
+
+    .nl:hover,
+    .nl.act {
+      color: var(--navy);
+      border-bottom-color: var(--orange)
+    }
+
+    .ch {
+      font-size: .55rem;
+      margin-top: 1px
+    }
+
+    .fly {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 235px;
+      background: var(--white);
+      border-top: 3px solid var(--orange);
+      box-shadow: var(--shadow-lg);
+      z-index: 600;
+      padding: 6px 0;
+      border-radius: 0 0 var(--radius) var(--radius)
+    }
+
+    .ni:hover .fly {
+      display: block
+    }
+
+    .fl {
+      display: block;
+      padding: 10px 18px;
+      font-size: .84rem;
+      color: var(--text-b);
+      text-decoration: none;
+      transition: background .15s, color .15s
+    }
+
+    .fl:hover {
+      background: var(--blue-l);
+      color: var(--navy)
+    }
+
+    .fdiv {
+      height: 1px;
+      background: var(--grey-bd);
+      margin: 5px 0
+    }
+
+    .fly-lbl {
+      padding: 7px 18px 3px;
+      font-family: var(--font-d);
+      font-size: .62rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--text-l)
+    }
+
+    .h-chat-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .82rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-left: auto
+    }
+
+    .h-chat-btn:hover {
+      background: var(--orange-d)
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 520px;
+      overflow: hidden;
+      display: flex;
+      align-items: center
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-image: url('assets/images/site/gcsc-homepage-hero-bg.webp')
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, rgba(10, 25, 80, .88) 0%, rgba(15, 37, 87, .75) 45%, rgba(26, 58, 138, .35) 100%)
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 56px 24px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 52px;
+      align-items: center;
+      width: 100%
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(244, 121, 32, .15);
+      border: 1px solid rgba(244, 121, 32, .4);
+      color: #FFB570;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 5px 13px;
+      border-radius: 2px;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: heroFadeDown .55s ease .1s forwards
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--orange);
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .4;
+        transform: scale(.7)
+      }
+    }
+
+    @keyframes heroSlideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-52px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0)
+      }
+    }
+
+    @keyframes heroFadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-16px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes heroFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .hero-title {
+      font-family: var(--font-d);
+      font-size: clamp(2rem, 4.5vw, 3.4rem);
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.08;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      margin-bottom: 14px;
+      opacity: 0;
+      transform: translateX(-52px);
+      animation: heroSlideIn .75s cubic-bezier(.22, 1, .36, 1) .3s forwards
+    }
+
+    .hero-title span {
+      color: var(--orange)
+    }
+
+    .hero-desc {
+      font-size: 1.02rem;
+      color: rgba(255, 255, 255, .75);
+      max-width: 480px;
+      line-height: 1.75;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: heroFadeUp .6s ease .75s forwards
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: heroFadeUp .6s ease 1s forwards
+    }
+
+    .hs {
+      text-align: center
+    }
+
+    .hs-n {
+      font-family: var(--font-d);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--orange)
+    }
+
+    .hs-l {
+      font-size: .66rem;
+      color: rgba(255, 255, 255, .55);
+      text-transform: uppercase;
+      letter-spacing: .09em
+    }
+
+    /* Track card */
+    .track-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden
+    }
+
+    .tc-head {
+      background: var(--navy);
+      padding: 13px 20px;
+      display: flex;
+      align-items: center;
+      gap: 9px
+    }
+
+    .tc-head-txt {
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .82rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--white)
+    }
+
+    .tc-body {
+      padding: 20px
+    }
+
+    .tc-row {
+      display: flex;
+      border: 2px solid var(--grey-bd);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 10px;
+      transition: border-color .2s
+    }
+
+    .tc-row:focus-within {
+      border-color: var(--orange)
+    }
+
+    #trackingInput {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 13px 15px;
+      font-family: var(--font-b);
+      font-size: .93rem;
+      color: var(--text-h)
+    }
+
+    #trackingInput::placeholder {
+      color: var(--text-l)
+    }
+
+    #searchBtn {
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .88rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 0 22px;
+      flex-shrink: 0;
+      transition: background .2s
+    }
+
+    #searchBtn:hover {
+      background: var(--orange-d)
+    }
+
+    #searchBtn:disabled {
+      opacity: .5;
+      cursor: not-allowed
+    }
+
+    .tc-hint {
+      font-size: .71rem;
+      color: var(--text-l);
+      margin-bottom: 14px
+    }
+
+    .tc-divider {
+      height: 1px;
+      background: var(--grey-bd);
+      margin: 14px 0
+    }
+
+    .tc-quick {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px
+    }
+
+    .tq-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      background: var(--off-white);
+      border: 1px solid var(--grey-bd);
+      border-radius: var(--radius);
+      font-size: .77rem;
+      font-weight: 600;
+      color: var(--text-b);
+      text-decoration: none;
+      transition: all .15s;
+      cursor: pointer;
+      font-family: var(--font-b)
+    }
+
+    .tq-btn:hover {
+      background: var(--blue-l);
+      border-color: rgba(30, 111, 180, .3);
+      color: var(--navy)
+    }
+
+    /* ── QUICK STRIP ── */
+    .quick-strip {
+      background: var(--white);
+      border-top: 4px solid var(--orange);
+      box-shadow: 0 4px 12px rgba(10, 30, 90, .06)
+    }
+
+    .qs-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr)
+    }
+
+    .qi {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 20px 24px;
+      border-right: 1px solid var(--grey-bd);
+      text-decoration: none;
+      color: var(--text-h);
+      transition: background .15s;
+      cursor: pointer;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-bottom: none;
+      font-family: inherit;
+      text-align: left;
+      width: 100%
+    }
+
+    .qi:last-child {
+      border-right: none
+    }
+
+    .qi:hover {
+      background: var(--blue-l)
+    }
+
+    .qi-icon {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      background: var(--orange-l);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem
+    }
+
+    .qi-tit {
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .9rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--navy);
+      margin-bottom: 2px
+    }
+
+    .qi-sub {
+      font-size: .73rem;
+      color: var(--text-m);
+      line-height: 1.4
+    }
+
+    /* ── STATES ── */
+    .state {
+      display: none
+    }
+
+    .state.active {
+      display: block
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 80px 20px
+    }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 3px solid var(--grey-bd);
+      border-top-color: var(--navy);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 16px
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .loading-text {
+      font-size: .9rem;
+      color: var(--text-m)
+    }
+
+    .error-state {
+      max-width: min(480px, calc(100% - 40px));
+      margin: 48px auto 64px;
+      background: #FFF8F6;
+      border: 1px solid rgba(244, 121, 32, .25);
+      border-left: 4px solid var(--orange);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center
+    }
+
+    .error-state .e-icon {
+      font-size: 2.6rem;
+      margin-bottom: 12px
+    }
+
+    .error-state .e-title {
+      font-family: var(--font-d);
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--navy);
+      margin-bottom: 8px
+    }
+
+    .error-state .e-msg {
+      color: var(--text-m);
+      font-size: .86rem;
+      line-height: 1.7;
+      margin-bottom: 22px
+    }
+
+    .btn-retry {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      padding: 10px 22px;
+      font-family: var(--font-d);
+      font-size: .84rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .2s
+    }
+
+    .btn-retry:hover {
+      background: var(--navy-d)
+    }
+
+    /* ── RESULTS ── */
+    .results {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+      animation: fadeIn .35s ease
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .track-again-bar {
+      display: flex;
+      margin-bottom: 20px;
+      border: 2px solid var(--grey-bd);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color .2s
+    }
+
+    .track-again-bar:focus-within {
+      border-color: var(--orange)
+    }
+
+    .track-again-input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      outline: none;
+      font-family: var(--font-b);
+      font-size: .9rem;
+      padding: 11px 16px;
+      color: var(--text-h)
+    }
+
+    .track-again-input::placeholder {
+      color: var(--text-l)
+    }
+
+    .btn-ta {
+      background: var(--orange);
+      color: var(--white);
+      border: none;
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .82rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 11px 22px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background .2s;
+      white-space: nowrap
+    }
+
+    .btn-ta:hover {
+      background: var(--orange-d)
+    }
+
+    .r-header {
+      background: var(--white);
+      border: 1px solid var(--grey-bd);
+      border-top: 4px solid var(--navy);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      box-shadow: var(--shadow-sm)
+    }
+
+    .r-tl {
+      font-size: .67rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--text-l);
+      margin-bottom: 4px
+    }
+
+    .r-tn {
+      font-family: var(--font-d);
+      font-size: 1.45rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      color: var(--navy);
+      word-break: break-all;
+      overflow-wrap: anywhere
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 18px;
+      border-radius: var(--radius);
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .84rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      white-space: nowrap
+    }
+
+    .r-progress {
+      background: var(--white);
+      border: 1px solid var(--grey-bd);
+      border-radius: var(--radius);
+      padding: 22px 28px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm)
+    }
+
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      padding-top: 6px
+    }
+
+    .progress-steps::before {
+      content: '';
+      position: absolute;
+      top: 22px;
+      left: 8%;
+      right: 8%;
+      height: 2px;
+      background: var(--grey-bd);
+      z-index: 0
+    }
+
+    .p-fill {
+      position: absolute;
+      top: 22px;
+      left: 8%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--navy), var(--orange));
+      z-index: 1;
+      transition: width .8s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .p-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      position: relative;
+      z-index: 2;
+      flex: 1
+    }
+
+    .p-dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid var(--grey-bd);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .78rem;
+      transition: all .3s
+    }
+
+    .p-dot.done {
+      border-color: var(--navy);
+      background: var(--blue-l);
+      color: var(--navy)
+    }
+
+    .p-dot.active {
+      border-color: var(--orange);
+      background: var(--orange);
+      color: var(--white)
+    }
+
+    .p-label {
+      font-size: .64rem;
+      color: var(--text-l);
+      text-align: center;
+      line-height: 1.3
+    }
+
+    .p-label.done {
+      color: var(--text-m)
+    }
+
+    .p-label.active {
+      color: var(--orange);
+      font-weight: 700
+    }
+
+    .r-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px
+    }
+
+    .r-card {
+      background: var(--white);
+      border: 1px solid var(--grey-bd);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-sm)
+    }
+
+    .r-card-full {
+      grid-column: 1/-1
+    }
+
+    .r-card h3 {
+      font-family: var(--font-d);
+      font-size: .72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--white);
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: -20px -22px 16px;
+      padding: 10px 22px
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--grey-bd);
+      gap: 14px
+    }
+
+    .info-row:last-child {
+      border-bottom: none
+    }
+
+    .info-label {
+      font-size: .78rem;
+      color: var(--text-m);
+      flex-shrink: 0;
+      max-width: 45%
+    }
+
+    .info-value {
+      font-size: .84rem;
+      font-weight: 600;
+      text-align: right;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      flex: 1;
+      min-width: 0;
+      color: var(--text-h)
+    }
+
+    .details-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 24px
+    }
+
+    .r-map {
+      background: var(--white);
+      border: 1px solid var(--grey-bd);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm)
+    }
+
+    .map-head {
+      padding: 12px 22px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .map-head h3 {
+      font-family: var(--font-d);
+      font-size: .72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--white)
+    }
+
+    #shipmentMap {
+      height: 300px
+    }
+
+    .map-foot {
+      padding: 10px 22px;
+      border-top: 1px solid var(--grey-bd);
+      font-size: .8rem;
+      color: var(--text-m);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--off-white)
+    }
+
+    .r-timeline {
+      background: var(--white);
+      border: 1px solid var(--grey-bd);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm)
+    }
+
+    .r-tl-head {
+      background: var(--navy);
+      padding: 12px 22px;
+      font-family: var(--font-d);
+      font-size: .72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--white)
+    }
+
+    .tl-body {
+      padding: 20px 22px
+    }
+
+    .tl-wrap {
+      position: relative;
+      padding-left: 26px
+    }
+
+    .tl-wrap::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: var(--grey-bd)
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 22px
+    }
+
+    .tl-item:last-child {
+      margin-bottom: 0
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: -22px;
+      top: 3px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--grey-bg);
+      border: 2px solid var(--grey-bd)
+    }
+
+    .tl-item.latest .tl-dot {
+      background: var(--orange);
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(244, 121, 32, .18)
+    }
+
+    .tl-time {
+      font-size: .7rem;
+      color: var(--text-l);
+      margin-bottom: 2px
+    }
+
+    .tl-status {
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .9rem;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      color: var(--text-h);
+      margin-bottom: 2px
+    }
+
+    .tl-item.latest .tl-status {
+      color: var(--navy)
+    }
+
+    .tl-loc {
+      font-size: .78rem;
+      color: var(--text-m)
+    }
+
+    .tl-desc {
+      font-size: .76rem;
+      color: var(--text-l);
+      margin-top: 3px;
+      line-height: 1.5
+    }
+
+    /* ── SECTION HELPERS ── */
+    .section {
+      padding: 72px 24px
+    }
+
+    .sec-inner {
+      max-width: 1240px;
+      margin: 0 auto
+    }
+
+    .sec-kicker {
+      font-family: var(--font-d);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 8px
+    }
+
+    .sec-title {
+      font-family: var(--font-d);
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      color: var(--text-h);
+      line-height: 1.15;
+      margin-bottom: 12px
+    }
+
+    .sec-title span {
+      color: var(--orange)
+    }
+
+    .sec-desc {
+      font-size: .98rem;
+      color: var(--text-m);
+      max-width: 540px;
+      line-height: 1.78;
+      margin-bottom: 40px
+    }
+
+    .sec-hdr {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start
+    }
+
+    .sec-hdr.center {
+      align-items: center;
+      text-align: center
+    }
+
+    .sec-hdr.center .sec-desc {
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    /* ── SERVICES ── */
+    .svc-section {
+      background: var(--off-white)
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px
+    }
+
+    .svc-card {
+      background: var(--white);
+      border: 1px solid var(--grey-bd);
+      border-top: 4px solid var(--orange);
+      padding: 28px 24px;
+      transition: transform .2s, box-shadow .2s;
+      border-radius: 0 0 var(--radius) var(--radius)
+    }
+
+    .svc-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md)
+    }
+
+    .svc-img {
+      height: 160px;
+      object-fit: cover;
+      width: 100%;
+      border-radius: 2px;
+      margin-bottom: 16px
+    }
+
+    .svc-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--orange-l);
+      border: 1px solid rgba(244, 121, 32, .2);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 14px
+    }
+
+    .svc-title {
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--text-h);
+      margin-bottom: 8px
+    }
+
+    .svc-desc {
+      font-size: .83rem;
+      color: var(--text-m);
+      line-height: 1.72;
+      margin-bottom: 14px
+    }
+
+    .svc-link {
+      font-family: var(--font-d);
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px
+    }
+
+    .svc-link:hover {
+      color: var(--orange)
+    }
+
+    /* ── WHY US ── */
+    .why-section {
+      background: var(--white)
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center
+    }
+
+    .why-img-wrap {
+      position: relative
+    }
+
+    .why-main-img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      display: block
+    }
+
+    .why-badge {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--navy);
+      padding: 20px 22px;
+      border-radius: var(--radius);
+      text-align: center;
+      box-shadow: var(--shadow-md)
+    }
+
+    .why-b-n {
+      font-family: var(--font-d);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--orange);
+      line-height: 1
+    }
+
+    .why-b-l {
+      font-size: .68rem;
+      color: rgba(255, 255, 255, .75);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-top: 4px
+    }
+
+    .why-points {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 32px
+    }
+
+    .wp {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start
+    }
+
+    .wp-icon {
+      width: 46px;
+      height: 46px;
+      flex-shrink: 0;
+      background: var(--blue-l);
+      border: 1px solid rgba(30, 111, 180, .18);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem
+    }
+
+    .wp-title {
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .9rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--text-h);
+      margin-bottom: 4px
+    }
+
+    .wp-desc {
+      font-size: .82rem;
+      color: var(--text-m);
+      line-height: 1.65
+    }
+
+    /* ── STATS ── */
+    .stats-strip {
+      background: var(--navy);
+      padding: 44px 24px
+    }
+
+    .stats-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      text-align: center
+    }
+
+    .st-n {
+      font-family: var(--font-d);
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--orange);
+      letter-spacing: -.02em;
+      margin-bottom: 4px
+    }
+
+    .st-l {
+      font-size: .72rem;
+      color: rgba(255, 255, 255, .65);
+      letter-spacing: .1em;
+      text-transform: uppercase
+    }
+
+    /* ── REVIEWS ── */
+    .reviews-section {
+      background: var(--off-white)
+    }
+
+    .reviews-carousel {
+      position: relative;
+      margin-top: 40px;
+      overflow: hidden
+    }
+
+    .rv-track {
+      display: flex;
+      transition: transform .45s cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .rv-slide {
+      min-width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding: 4px 2px
+    }
+
+    .rv-card {
+      background: var(--white);
+      border: 1px solid var(--grey-bd);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .2s, box-shadow .2s;
+      position: relative
+    }
+
+    .rv-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md)
+    }
+
+    .rv-card::before {
+      content: '"';
+      position: absolute;
+      top: 14px;
+      right: 20px;
+      font-size: 4rem;
+      color: var(--orange);
+      opacity: .15;
+      font-family: Georgia, serif;
+      line-height: 1
+    }
+
+    .rv-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 14px
+    }
+
+    .rv-star {
+      color: var(--orange);
+      font-size: 1rem
+    }
+
+    .rv-text {
+      font-size: .88rem;
+      color: var(--text-b);
+      line-height: 1.78;
+      font-style: italic;
+      margin-bottom: 20px
+    }
+
+    .rv-person {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .rv-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--orange-l);
+      flex-shrink: 0
+    }
+
+    .rv-name {
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .88rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--text-h)
+    }
+
+    .rv-role {
+      font-size: .74rem;
+      color: var(--text-m)
+    }
+
+    .rv-verified {
+      font-size: .65rem;
+      color: var(--navy);
+      font-weight: 600;
+      font-family: var(--font-d);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 3px
+    }
+
+    /* Carousel nav */
+    .rv-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 32px
+    }
+
+    .rv-arrow {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--grey-bd);
+      background: var(--white);
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+      flex-shrink: 0;
+      color: var(--navy)
+    }
+
+    .rv-arrow:hover {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy)
+    }
+
+    .rv-arrow:disabled {
+      opacity: .35;
+      cursor: not-allowed;
+      pointer-events: none
+    }
+
+    .rv-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .rv-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--grey-bd);
+      cursor: pointer;
+      transition: all .25s;
+      border: none;
+      padding: 0
+    }
+
+    .rv-dot.active {
+      background: var(--orange);
+      width: 26px;
+      border-radius: 5px
+    }
+
+    @media(max-width:768px) {
+      .rv-slide {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* ── PARTNERS ── */
+    .partners-section {
+      background: var(--white);
+      padding: 56px 24px;
+      border-top: 1px solid var(--grey-bd)
+    }
+
+    .partners-inner {
+      max-width: 1240px;
+      margin: 0 auto
+    }
+
+    .pt-kicker {
+      font-family: var(--font-d);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text-l);
+      text-align: center;
+      margin-bottom: 36px
+    }
+
+    .partners-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px
+    }
+
+    .partner-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 140px;
+      height: 56px;
+      filter: grayscale(1);
+      opacity: .55;
+      transition: all .3s;
+      text-decoration: none
+    }
+
+    .partner-logo:hover {
+      filter: grayscale(0);
+      opacity: 1;
+      transform: scale(1.05)
+    }
+
+    .partner-logo svg,
+    .partner-logo img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain
+    }
+
+    /* Styled text-based partner logos */
+    .plogo-txt {
+      font-family: var(--font-d);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: .04em;
+      color: var(--text-m);
+      text-transform: uppercase;
+      white-space: nowrap;
+      text-align: center
+    }
+
+    /* ── HERO STRIP (below partners) ── */
+    .hero-strip {
+      position: relative;
+      height: 260px;
+      overflow: hidden;
+      display: flex;
+      align-items: center
+    }
+
+    .hs-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center
+    }
+
+    .hs-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(10, 25, 80, .88) 0%, rgba(10, 25, 80, .5) 60%, transparent 100%)
+    }
+
+    .hs-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%
+    }
+
+    .hs-title {
+      font-family: var(--font-d);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 600;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      margin-bottom: 8px
+    }
+
+    .hs-title span {
+      color: var(--orange)
+    }
+
+    .hs-sub {
+      font-size: .95rem;
+      color: rgba(255, 255, 255, .7);
+      margin-bottom: 22px;
+      max-width: 440px
+    }
+
+    .hs-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--orange);
+      color: var(--white);
+      text-decoration: none;
+      padding: 12px 26px;
+      border-radius: var(--radius);
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .88rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      transition: background .2s
+    }
+
+    .hs-btn:hover {
+      background: var(--orange-d)
+    }
+
+    /* ── FOOTER ── */
+    .footer-top {
+      background: var(--navy-d);
+      padding: 56px 24px 40px
+    }
+
+    .ft-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2.4fr 1fr 1fr 1fr;
+      gap: 52px
+    }
+
+    .f-logo-img {
+      height: 64px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      margin-bottom: 16px
+    }
+
+    .f-desc {
+      font-size: .82rem;
+      color: rgba(255, 255, 255, .5);
+      line-height: 1.78;
+      max-width: 280px;
+      margin-bottom: 18px
+    }
+
+    .f-address {
+      font-size: .8rem;
+      color: rgba(255, 255, 255, .5);
+      line-height: 1.65;
+      margin-bottom: 14px
+    }
+
+    .f-address strong {
+      color: rgba(255, 255, 255, .75);
+      display: block;
+      margin-bottom: 3px;
+      font-family: var(--font-d);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase
+    }
+
+    .f-socials {
+      display: flex;
+      gap: 8px
+    }
+
+    .f-soc {
+      width: 34px;
+      height: 34px;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .88rem;
+      text-decoration: none;
+      color: rgba(255, 255, 255, .6);
+      transition: all .2s
+    }
+
+    .f-soc:hover {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: var(--white)
+    }
+
+    .f-col-title {
+      font-family: var(--font-d);
+      font-size: .68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      color: var(--orange);
+      margin-bottom: 18px
+    }
+
+    .f-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px
+    }
+
+    .f-links a {
+      font-size: .82rem;
+      color: rgba(255, 255, 255, .5);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .f-links a:hover {
+      color: var(--white)
+    }
+
+    .footer-bot {
+      background: #08122A;
+      padding: 14px 24px;
+      color: rgba(255, 255, 255, .3);
+      font-size: .73rem
+    }
+
+    .fb-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .fb-inner a {
+      color: rgba(255, 255, 255, .3);
+      text-decoration: none;
+      margin-left: 18px
+    }
+
+    .fb-inner a:hover {
+      color: rgba(255, 255, 255, .7)
+    }
+
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      z-index: 9999;
+      background: var(--white);
+      border: 1px solid var(--grey-bd);
+      border-left: 4px solid var(--navy);
+      border-radius: var(--radius);
+      padding: 12px 18px;
+      font-size: .84rem;
+      opacity: 0;
+      transition: all .25s;
+      box-shadow: var(--shadow-md);
+      white-space: nowrap
+    }
+
+    .toast.toast-visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0)
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 32px
+      }
+
+      .track-card {
+        max-width: 560px
+      }
+
+      .why-grid {
+        grid-template-columns: 1fr;
+        gap: 40px
+      }
+
+      .why-badge {
+        bottom: -10px;
+        right: 10px
+      }
+
+      .stats-inner {
+        grid-template-columns: repeat(3, 1fr)
+      }
+    }
+
+    @media(max-width:768px) {
+
+      .top-bar,
+      .nav-list {
+        display: none
+      }
+
+      .h-inner {
+        height: 58px
+      }
+
+      .logo img {
+        height: 50px;
+        max-width: 160px
+      }
+
+      .qs-inner {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .qi {
+        border-bottom: 1px solid var(--grey-bd)
+      }
+
+      .qi:nth-child(even) {
+        border-right: none
+      }
+
+      .services-grid,
+      .reviews-grid {
+        grid-template-columns: 1fr
+      }
+
+      .stats-inner {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .results {
+        padding: 16px 14px 48px
+      }
+
+      .r-grid {
+        grid-template-columns: 1fr
+      }
+
+      .r-card-full {
+        grid-column: 1
+      }
+
+      .details-inner {
+        grid-template-columns: 1fr
+      }
+
+      #shipmentMap {
+        height: 220px
+      }
+
+      .ft-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px
+      }
+
+
+      .hero-inner {
+        padding: 40px 20px
+      }
+    }
+
+    @media(max-width:480px) {
+      .qs-inner {
+        grid-template-columns: 1fr
+      }
+
+      .qi:nth-child(even) {
+        border-right: none
+      }
+
+      .ft-inner {
+        grid-template-columns: 1fr
+      }
+
+      .hero-stats {
+        gap: 14px
+      }
+
+      .partners-grid {
+        gap: 24px
+      }
+
+      .partner-logo {
+        width: 110px;
+        height: 44px
+      }
+    }
+
+    @media(max-width:380px) {
+      .p-label {
+        display: none
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="tb-inner">
+      <div class="tb-links">
+        <a href="contact.html">Find US Office</a>
+        <span>|</span>
+        <a href="contact.html">Service Alerts</a>
+        <span>|</span>
+        <a href="history.html">Our History</a>
+        <span>|</span>
+        <a href="careers.html">Careers</a>
+      </div>
+      <div class="tb-right">
+        <a class="tb-phone" href="tel:+18005424678">📞 1-800-GCSC-HUB</a>
+        <div class="tb-flag">🇺🇸 United States</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="h-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/images/logos/logo_transparent.webp" alt="Global Cargo Shipping Company" />
+      </a>
+      <nav>
+        <ul class="nav-list">
+          <li class="ni"><button class="nl act" onclick="window.scrollTo({top:0,behavior:'smooth'})">Track</button></li>
+          <li class="ni">
+            <button class="nl">Ship <span class="ch">▾</span></button>
+            <div class="fly">
+              <div class="fly-lbl">Start Shipping</div>
+              <a class="fl" href="quote.html">Get a Quote</a>
+              <a class="fl" href="quote.html">Book a Shipment</a>
+              <div class="fdiv"></div>
+              <div class="fly-lbl">Services</div>
+              <a class="fl" href="air-freight.html">Express Air Freight</a>
+              <a class="fl" href="ocean-freight.html">Ocean Freight</a>
+              <a class="fl" href="road-freight.html">Domestic Road Freight</a>
+              <a class="fl" href="express-parcel.html">Express Parcel Delivery</a>
+            </div>
+          </li>
+          <li class="ni">
+            <button class="nl">Solutions <span class="ch">▾</span></button>
+            <div class="fly">
+              <a class="fl" href="international-shipping.html">International Shipping</a>
+              <a class="fl" href="customs.html">Customs & Brokerage</a>
+              <a class="fl" href="warehousing.html">Warehousing & 3PL</a>
+              <a class="fl" href="supply-chain.html">Supply Chain Management</a>
+              <a class="fl" href="ecommerce.html">E-Commerce Fulfillment</a>
+            </div>
+          </li>
+          <li class="ni">
+            <button class="nl">Business <span class="ch">▾</span></button>
+            <div class="fly">
+              <a class="fl" href="business-account.html">Open a Business Account</a>
+              <a class="fl" href="business-account.html">Volume Discounts</a>
+              <a class="fl" href="api-integration.html">API & Tech Integration</a>
+              <a class="fl" href="enterprise.html">Enterprise Solutions</a>
+            </div>
+          </li>
+          <li class="ni"><a class="nl" href="history.html">Our Story</a></li>
+          <li class="ni"><a class="nl" href="contact.html">Support</a></li>
+        </ul>
+      </nav>
+      <button class="h-chat-btn" onclick="openChatWidget()">💬 Live Support</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">
+          <div class="live-dot"></div> Live Tracking Active — 24/7 US Operations
+        </div>
+        <h1 class="hero-title">Global Cargo<br>International<br><span>logistics Partner</span></h1>
+        <p class="hero-desc">Your trusted global logistics partner delivering fast, secure, and reliable shipping
+          solutions. From documents to full freight containers, we connect businesses to over 198 countries worldwide
+          with precision and efficiency.</p>
+        <div class="hero-stats">
+          <div class="hs">
+            <div class="hs-n">35+</div>
+            <div class="hs-l">Years in USA</div>
+          </div>
+          <div class="hs">
+            <div class="hs-n">198+</div>
+            <div class="hs-l">Countries</div>
+          </div>
+          <div class="hs">
+            <div class="hs-n">99.5%</div>
+            <div class="hs-l">On-Time</div>
+          </div>
+          <div class="hs">
+            <div class="hs-n">24/7</div>
+            <div class="hs-l">US Support</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="track-card">
+          <div class="tc-head"><span class="tc-head-txt">📦 Track Your Shipment</span></div>
+          <div class="tc-body">
+            <div class="tc-row">
+              <input type="text" id="trackingInput" placeholder="Enter tracking number e.g. GCSC26-Y6HA8BIH"
+                autocomplete="off" autocapitalize="characters" spellcheck="false" />
+              <button id="searchBtn" onclick="trackShipment()">TRACK →</button>
+            </div>
+            <div class="tc-hint">Separate multiple numbers with a comma · US domestic & international</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK STRIP -->
+  <div class="quick-strip">
+    <div class="qs-inner">
+      <button class="qi" onclick="location.href='quote.html'">
+        <div class="qi-icon">🚀</div>
+        <div>
+          <div class="qi-tit">Ship Now</div>
+          <div class="qi-sub">Book your next US shipment</div>
+        </div>
+      </button>
+      <button class="qi" onclick="location.href='quote.html'">
+        <div class="qi-icon">💰</div>
+        <div>
+          <div class="qi-tit">Get a Quote</div>
+          <div class="qi-sub">Instant rate estimates</div>
+        </div>
+      </button>
+      <button class="qi" onclick="location.href='business-account.html'">
+        <div class="qi-icon">🏢</div>
+        <div>
+          <div class="qi-tit">US Business Account</div>
+          <div class="qi-sub">Priority rates & dedicated manager</div>
+        </div>
+      </button>
+      <button class="qi" onclick="openChatWidget()">
+        <div class="qi-icon">💬</div>
+        <div>
+          <div class="qi-tit">US Live Support</div>
+          <div class="qi-sub">Available 24/7 · 2-min avg. response</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div class="state loading-state" id="loadingState">
+    <div class="spinner"></div>
+    <p class="loading-text">Searching our global network…</p>
+  </div>
+
+  <!-- ERROR -->
+  <div class="state error-state" id="errorState">
+    <div class="e-icon">📭</div>
+    <div class="e-title">Shipment Not Found</div>
+    <div class="e-msg" id="errorMsg">We couldn't locate a shipment with that number. Please verify and try again, or
+      contact our US support team.</div>
+    <button class="btn-retry" onclick="resetSearch()">← Try Another Number</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="state results" id="resultsSection">
+    <div class="track-again-bar">
+      <input class="track-again-input" id="trackAgainInput" type="text" placeholder="Track another shipment…"
+        autocomplete="off" autocapitalize="characters" spellcheck="false" />
+      <button class="btn-ta" onclick="doTrackAgain()">TRACK →</button>
+    </div>
+    <div class="r-header">
+      <div>
+        <div class="r-tl">Tracking Number</div>
+        <div class="r-tn" id="dispTrackingNum">—</div>
+      </div>
+      <div id="statusBadge" class="status-badge"></div>
+    </div>
+    <div class="r-progress">
+      <div class="progress-steps" id="progressSteps">
+        <div class="p-fill" id="progressFill"></div>
+      </div>
+    </div>
+    <div class="r-grid">
+      <div class="r-card">
+        <h3>📤 Sender Information</h3>
+        <div id="senderInfo"></div>
+      </div>
+      <div class="r-card">
+        <h3>📥 Receiver Information</h3>
+        <div id="receiverInfo"></div>
+      </div>
+      <div class="r-card r-card-full">
+        <h3>📋 Shipment Details</h3>
+        <div class="details-inner" id="shipDetails"></div>
+      </div>
+    </div>
+    <div class="r-map">
+      <div class="map-head"><span>🌍</span>
+        <h3>Current Location</h3>
+      </div>
+      <div id="shipmentMap"></div>
+      <div class="map-foot">📍 <span id="mapLocText">—</span></div>
+    </div>
+    <div class="r-timeline">
+      <div class="r-tl-head">🕒 Shipment History</div>
+      <div class="tl-body">
+        <div class="tl-wrap" id="timeline"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="mainContent">
+
+    <!-- SERVICES -->
+    <div class="section svc-section">
+      <div class="sec-inner">
+        <div class="sec-hdr">
+          <div class="sec-kicker">Our Services</div>
+          <div class="sec-title">Comprehensive Logistics<br><span>Solutions for US Businesses</span></div>
+          <div class="sec-desc">From single packages to full container loads — GCSC delivers with the reliability,
+            technology, and care that American businesses depend on.</div>
+        </div>
+        <div class="services-grid">
+          <div class="svc-card">
+            <img class="svc-img" src="assets/images/site/air-freight-express-hero.png" alt="Air Freight"
+              loading="lazy" />
+            <div class="svc-title">Air Freight Express</div>
+            <div class="svc-desc">Time-critical international air cargo with next-business-day and economy options from
+              all major US airports to 198+ global destinations.</div>
+            <a href="air-freight.html" class="svc-link">Explore Air Freight →</a>
+          </div>
+          <div class="svc-card">
+            <img class="svc-img" src="assets/images/site/cargo-ship-sunset-asian-port-compressed_webpifier.webp"
+              alt="Ocean Freight" loading="lazy" />
+            <div class="svc-title">Ocean Freight</div>
+            <div class="svc-desc">FCL and LCL sea freight from US East and West Coast ports. Competitive rates,
+              real-time container tracking, and full customs support included.</div>
+            <a href="ocean-freight.html" class="svc-link">Explore Ocean Freight →</a>
+          </div>
+          <div class="svc-card">
+            <img class="svc-img"
+              src="assets/images/site/gcsc-homepage-hero-bg.webp"
+              alt="Road Freight" loading="lazy" />
+            <div class="svc-title">US Domestic Road</div>
+            <div class="svc-desc">FTL and LTL road freight across all 50 US states, with next-day metro service and
+              temperature-controlled options for sensitive cargo.</div>
+            <a href="road-freight.html" class="svc-link">Explore Road Freight →</a>
+          </div>
+          <div class="svc-card">
+            <img class="svc-img"
+              src="assets/images/site/warehouse-box-moving-robots.png"
+              alt="Smart Warehousing" loading="lazy" />
+            <div class="svc-title">Smart Warehousing</div>
+            <div class="svc-desc">AI-powered fulfillment centers across New York, Los Angeles, Chicago, and Houston.
+              Pick-and-pack, returns management, and e-commerce integration.</div>
+            <a href="warehousing.html" class="svc-link">Explore Warehousing →</a>
+          </div>
+          <div class="svc-card">
+            <img class="svc-img"
+              src="assets/images/site/gcsc-customs-service.jpg"
+              alt="Customs Clearance" loading="lazy" />
+            <div class="svc-title">Customs & Brokerage</div>
+            <div class="svc-desc">Licensed US customs brokers handling all import/export documentation, ISF filings,
+              tariff classification, and CBP compliance at all US ports of entry.</div>
+            <a href="customs.html" class="svc-link">Explore Customs →</a>
+          </div>
+          <div class="svc-card">
+            <img class="svc-img" src="assets/images/site/globalcargo_supply_chain.png" alt="Supply Chain"
+              loading="lazy" />
+            <div class="svc-title">Supply Chain Management</div>
+            <div class="svc-desc">End-to-end visibility and control of your entire US and international supply chain.
+              Real-time analytics, risk mitigation, and optimization reporting.</div>
+            <a href="supply-chain.html" class="svc-link">Explore Supply Chain →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY GCSC -->
+    <div class="section why-section">
+      <div class="sec-inner">
+        <div class="why-grid">
+          <div class="why-img-wrap">
+            <img class="why-main-img"
+              src="assets/images/site/premium_photo-1661933302016-2946d0b15650-compressed_webpifier.webp"
+              alt="GCSC Operations" loading="lazy" />
+            <div class="why-badge">
+              <div class="why-b-n">#1</div>
+              <div class="why-b-l">US Freight Forwarder</div>
+              <div class="why-b-l">Est. 1990</div>
+            </div>
+          </div>
+          <div>
+            <div class="sec-kicker">Why Choose GCSC</div>
+            <div class="sec-title">Over Three Decades of<br><span>American Excellence</span></div>
+            <div class="sec-desc">What began as a small freight operation in England grew into one of America's most
+              trusted international cargo companies — built on integrity, technology, and relentless service.</div>
+            <div class="why-points">
+              <div class="wp">
+                <div class="wp-icon">🛡️</div>
+                <div>
+                  <div class="wp-title">Fully Insured & Compliant</div>
+                  <div class="wp-desc">Every US shipment is covered with comprehensive cargo insurance. Fully licensed
+                    as a NVOCC and FMC-registered US freight forwarder.</div>
+                </div>
+              </div>
+              <div class="wp">
+                <div class="wp-icon">🌐</div>
+                <div>
+                  <div class="wp-title">Truly Global, Deeply American</div>
+                  <div class="wp-desc">198+ countries connected through our New York headquarters and 14 US regional
+                    offices. Local expertise with global infrastructure.</div>
+                </div>
+              </div>
+              <div class="wp">
+                <div class="wp-icon">📊</div>
+                <div>
+                  <div class="wp-title">Real-Time Shipment Visibility</div>
+                  <div class="wp-desc">Our proprietary technology platform gives US clients full transparency — live GPS
+                    tracking, milestone alerts, and delay notifications.</div>
+                </div>
+              </div>
+              <div class="wp">
+                <div class="wp-icon">🏆</div>
+                <div>
+                  <div class="wp-title">Award-Winning US Service</div>
+                  <div class="wp-desc">Voted America's Best Freight Forwarder by Supply Chain Management Review for
+                    three consecutive years (2023, 2024, 2025).</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-strip">
+      <div class="stats-inner">
+        <div>
+          <div class="st-n">35+</div>
+          <div class="st-l">Years Serving the US</div>
+        </div>
+        <div>
+          <div class="st-n">198+</div>
+          <div class="st-l">Countries Served</div>
+        </div>
+        <div>
+          <div class="st-n">1.8B+</div>
+          <div class="st-l">Parcels Delivered</div>
+        </div>
+        <div>
+          <div class="st-n">14</div>
+          <div class="st-l">US Regional Offices</div>
+        </div>
+        <div>
+          <div class="st-n">99.5%</div>
+          <div class="st-l">On-Time Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO STRIP 1 -->
+    <div class="hero-strip">
+      <div class="hs-bg"
+        style="background-image:url('assets/images/site/gcsc-shipping-quote-hero.webp')">
+      </div>
+      <div class="hs-overlay"></div>
+      <div class="hs-content">
+        <div class="hs-title">US Domestic &amp; International<br><span>Freight Solutions</span></div>
+        <div class="hs-sub">Get an instant quote for your next US or international shipment. No hidden fees. Transparent
+          pricing from America's most trusted freight partner.</div>
+        <a href="quote.html" class="hs-btn">Get a Free Quote →</a>
+      </div>
+    </div>
+
+    <!-- CUSTOMER REVIEWS -->
+    <div class="section reviews-section">
+      <div class="sec-inner">
+        <div class="sec-hdr center">
+          <div class="sec-kicker">Customer Reviews</div>
+          <div class="sec-title">Trusted by Thousands of<br><span>US Businesses & Individuals</span></div>
+          <div class="sec-desc">Don't take our word for it — here's what our verified US clients say about shipping with
+            Global Cargo.</div>
+        </div>
+        <div class="reviews-carousel" id="reviewsCarousel">
+          <div class="rv-track" id="rvTrack">
+            <!-- Slide 1 -->
+            <div class="rv-slide">
+              <div class="rv-card">
+                <div class="rv-stars">★★★★★</div>
+                <div class="rv-text">"GCSC transformed our international supply chain completely. From our Chicago
+                  warehouse to distributors in 18 countries — every shipment arrives on time, with full tracking
+                  visibility the whole way. They've been our logistics backbone for 7 years."</div>
+                <div class="rv-person">
+                  <img class="rv-avatar" src="https://i.pravatar.cc/96?img=11" alt="Marcus T." loading="lazy" />
+                  <div>
+                    <div class="rv-name">Marcus T.</div>
+                    <div class="rv-role">VP Operations — TechFlow Industries, Chicago</div>
+                    <div class="rv-verified">✓ Verified Business Client</div>
+                  </div>
+                </div>
+              </div>
+              <div class="rv-card">
+                <div class="rv-stars">★★★★★</div>
+                <div class="rv-text">"I was nervous shipping high-value electronics internationally for the first time.
+                  GCSC's team in New York walked me through every step — customs, insurance, tracking. The package
+                  arrived in Singapore in perfect condition, two days ahead of schedule."</div>
+                <div class="rv-person">
+                  <img class="rv-avatar" src="https://i.pravatar.cc/96?img=5" alt="Priya S." loading="lazy" />
+                  <div>
+                    <div class="rv-name">Priya S.</div>
+                    <div class="rv-role">E-Commerce Seller, New York</div>
+                    <div class="rv-verified">✓ Verified Client</div>
+                  </div>
+                </div>
+              </div>
+              <div class="rv-card">
+                <div class="rv-stars">★★★★★</div>
+                <div class="rv-text">"As a small US manufacturer exporting to Europe and the Middle East, GCSC gave us
+                  enterprise-level service at a price that actually worked. Their customs brokerage team is phenomenal —
+                  saved us thousands in duties on our first shipment alone."</div>
+                <div class="rv-person">
+                  <img class="rv-avatar" src="https://i.pravatar.cc/96?img=8" alt="James H." loading="lazy" />
+                  <div>
+                    <div class="rv-name">James H.</div>
+                    <div class="rv-role">Owner — Hartley Manufacturing, Dallas TX</div>
+                    <div class="rv-verified">✓ Verified Business Client</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="rv-slide">
+              <div class="rv-card">
+                <div class="rv-stars">★★★★★</div>
+                <div class="rv-text">"After a nightmare experience with two other freight companies, GCSC restored our
+                  faith. Dedicated account manager, proactive updates, zero surprises. We've now moved all our ocean
+                  freight business to them — over 40 containers a year."</div>
+                <div class="rv-person">
+                  <img class="rv-avatar" src="https://i.pravatar.cc/96?img=25" alt="Diana K." loading="lazy" />
+                  <div>
+                    <div class="rv-name">Diana K.</div>
+                    <div class="rv-role">Logistics Director — Pacific Rim Imports, LA</div>
+                    <div class="rv-verified">✓ Verified Business Client</div>
+                  </div>
+                </div>
+              </div>
+              <div class="rv-card">
+                <div class="rv-stars">★★★★☆</div>
+                <div class="rv-text">"Shipping medical equipment requires absolute precision and compliance. GCSC
+                  understands that better than anyone. Their temperature-controlled air freight and meticulous
+                  documentation has made them our exclusive logistics partner for cross-border medical freight."</div>
+                <div class="rv-person">
+                  <img class="rv-avatar" src="https://i.pravatar.cc/96?img=32" alt="Dr. Robert N." loading="lazy" />
+                  <div>
+                    <div class="rv-name">Dr. Robert N.</div>
+                    <div class="rv-role">CEO — MedEquip Solutions, Houston TX</div>
+                    <div class="rv-verified">✓ Verified Business Client</div>
+                  </div>
+                </div>
+              </div>
+              <div class="rv-card">
+                <div class="rv-stars">★★★★★</div>
+                <div class="rv-text">"I've been a personal customer since 2018, shipping gifts and documents between the
+                  US and family in the UK. Their prices are honest, the tracking app is excellent, and their support
+                  team picks up within minutes. GCSC genuinely cares about every shipment."</div>
+                <div class="rv-person">
+                  <img class="rv-avatar" src="https://i.pravatar.cc/96?img=47" alt="Sofia M." loading="lazy" />
+                  <div>
+                    <div class="rv-name">Sofia M.</div>
+                    <div class="rv-role">Personal Customer, Boston MA</div>
+                    <div class="rv-verified">✓ Verified Client</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Carousel navigation -->
+          <div class="rv-nav">
+            <button class="rv-arrow" id="rvPrev" onclick="rvMove(-1)" aria-label="Previous reviews">&#8592;</button>
+            <div class="rv-dots" id="rvDots">
+              <button class="rv-dot active" onclick="rvGoTo(0)"></button>
+              <button class="rv-dot" onclick="rvGoTo(1)"></button>
+            </div>
+            <button class="rv-arrow" id="rvNext" onclick="rvMove(1)" aria-label="Next reviews">&#8594;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARTNERS -->
+    <div class="partners-section">
+      <div class="partners-inner">
+        <div class="pt-kicker">Our Trusted US & Global Partners</div>
+        <div class="partners-grid">
+          <div class="partner-logo" title="FedEx Network Partner">
+            <div class="plogo-txt" style="color:#4D148C">Fed<span style="color:#F60">Ex</span></div>
+          </div>
+          <div class="partner-logo" title="UPS Alliance">
+            <div class="plogo-txt" style="color:#351C15">UPS</div>
+          </div>
+          <div class="partner-logo" title="Amazon Logistics">
+            <div class="plogo-txt" style="color:#FF9900">amazon</div>
+          </div>
+          <div class="partner-logo" title="Maersk Ocean Carrier">
+            <div class="plogo-txt" style="color:#005C8E">MAERSK</div>
+          </div>
+          <div class="partner-logo" title="MSC Shipping">
+            <div class="plogo-txt" style="color:#1C2E5A">MSC</div>
+          </div>
+          <div class="partner-logo" title="Boeing Air Cargo">
+            <div class="plogo-txt" style="color:#1C3E86">BOEING</div>
+          </div>
+          <div class="partner-logo" title="US CBP Partner">
+            <div class="plogo-txt" style="color:#003087">US <span style="color:#C0392B">CBP</span></div>
+          </div>
+          <div class="partner-logo" title="Walmart Supply Chain">
+            <div class="plogo-txt" style="color:#0071CE">Walmart</div>
+          </div>
+          <div class="partner-logo" title="Port of New York & New Jersey">
+            <div class="plogo-txt" style="color:#1A3A8A">PORT<br><span style="font-size:.72rem">NYNJ</span></div>
+          </div>
+          <div class="partner-logo" title="Port of Los Angeles">
+            <div class="plogo-txt" style="color:#003594">PORT<br><span style="font-size:.72rem">LA</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO STRIP 2 — Our Story -->
+    <div class="hero-strip">
+      <div class="hs-bg"
+        style="background-image:url('assets/images/site/gcsc-our-story-hero.webp')">
+      </div>
+      <div class="hs-overlay"></div>
+      <div class="hs-content">
+        <div class="hs-title">From England to America —<br><span>35 Years of Global Legacy</span></div>
+        <div class="hs-sub">Founded in London in 1990, GCSC has grown into one of the most respected names in US
+          international freight. Discover our remarkable journey.</div>
+        <a href="history.html" class="hs-btn">Read Our Story →</a>
+      </div>
+    </div>
+
+  </div><!-- /mainContent -->
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="ft-inner">
+        <div>
+          <img class="f-logo-img" src="assets/images/logos/footer_logo.png" alt="Global Cargo Shipping Company" />
+          <div class="f-desc">America's premier international freight and logistics company. Headquartered in New York,
+            serving US businesses and individuals since 1990 with honesty, precision, and care.</div>
+          <div class="f-address">
+            <strong>US Headquarters</strong>
+            One World Trade Center, Suite 8500<br>New York, NY 10007, United States<br>
+            📞 1-800-GCSC-HUB &nbsp;|&nbsp; ✉ support@gcsc.online
+          </div>
+          <div class="f-socials">
+            <a class="f-soc" href="#" title="LinkedIn">in</a>
+            <a class="f-soc" href="#" title="Twitter / X">𝕏</a>
+            <a class="f-soc" href="#" title="Facebook">f</a>
+            <a class="f-soc" href="#" title="Instagram">📷</a>
+          </div>
+        </div>
+        <div>
+          <div class="f-col-title">Services</div>
+          <ul class="f-links">
+            <li><a href="index.html">Track Shipment</a></li>
+            <li><a href="air-freight.html">Air Freight</a></li>
+            <li><a href="ocean-freight.html">Ocean Freight</a></li>
+            <li><a href="road-freight.html">US Road Freight</a></li>
+            <li><a href="customs.html">Customs Clearance</a></li>
+            <li><a href="warehousing.html">Warehousing & 3PL</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="f-col-title">Company</div>
+          <ul class="f-links">
+            <li><a href="history.html">Our History</a></li>
+            <li><a href="about.html">Leadership Team</a></li>
+            <li><a href="careers.html">Careers at GCSC</a></li>
+            <li><a href="contact.html">Press & Media</a></li>
+            <li><a href="sustainability.html">Sustainability</a></li>
+            <li><a href="contact.html">Investor Relations</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="f-col-title">Support</div>
+          <ul class="f-links">
+            <li><a href="contact.html">US Customer Service</a></li>
+            <li><a href="faq.html">FAQs</a></li>
+            <li><a href="contact.html">US Office Locator</a></li>
+            <li><a href="contact.html">File a Claim</a></li>
+            <li><a href="#" onclick="openChatWidget();return false">Live Chat</a></li>
+            <li><a href="admin/login.html">Admin Portal</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <div class="fb-inner">
+        <span>© 2025 Global Cargo Shipping Company Inc. — All rights reserved. Registered in New York, USA.</span>
+        <div>
+          <a href="privacy.html">Privacy</a><a href="privacy.html">Cookies</a><a href="terms.html">Terms</a><a
+            href="contact.html">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="config.js"></script>
+  <script src="chat-widget.js"></script>
+  <script>
+    // ── TRACKING ──────────────────────────────────────────────────────────────────
+    let shipmentMap = null, mapMarker = null;
+    // showToast() is provided by config.js (supports message, type, duration)
+    function setState(s) { ['loadingState', 'errorState', 'resultsSection'].forEach(id => { document.getElementById(id).classList.toggle('active', id.startsWith(s)) }); document.getElementById('mainContent').style.display = s === 'idle' ? 'block' : 'none'; const btn = document.getElementById('searchBtn'); btn.disabled = s === 'loading'; btn.textContent = s === 'loading' ? '…' : 'TRACK →'; if (s === 'results' && shipmentMap) setTimeout(() => shipmentMap.invalidateSize(), 120) }
+    async function trackShipment() { const inp = document.getElementById('trackingInput'); const tn = inp.value.trim().toUpperCase(); if (!tn) { showToast('Please enter a tracking number'); inp.focus(); return } setState('loading'); try { const d = await apiRequest('/shipments/track/' + tn); displayShipment(d.shipment); setState('results'); document.getElementById('trackAgainInput').value = '' } catch (e) { document.getElementById('errorMsg').textContent = e.status === 404 ? 'No shipment found. Please verify the number or contact our US support team.' : 'Something went wrong. Please try again or call 1-800-GCSC-HUB.'; setState('error') } }
+    function doTrackAgain() { const v = document.getElementById('trackAgainInput').value.trim().toUpperCase(); if (!v) { document.getElementById('trackAgainInput').focus(); return } document.getElementById('trackingInput').value = v; trackShipment(); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+    function resetSearch() { setState('idle'); document.getElementById('trackingInput').value = ''; window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => document.getElementById('trackingInput').focus(), 300) }
+    function displayShipment(s) { document.getElementById('dispTrackingNum').textContent = s.trackingNumber; const sc = getStatusConfig(s.status); const b = document.getElementById('statusBadge'); b.textContent = sc.icon + ' ' + sc.label; b.style.background = sc.bg; b.style.color = sc.color; renderProgress(s.status); renderContact('senderInfo', s.sender); renderContact('receiverInfo', s.receiver); renderDetails(s); renderMap(s.currentLocation); renderTimeline([...s.timeline].reverse()) }
+    function renderProgress(cs) { const steps = [{ key: 'Pending', icon: '📋', label: 'Pending' }, { key: 'Processing', icon: '⚙️', label: 'Processing' }, { key: 'In Transit', icon: '🚚', label: 'In Transit' }, { key: 'Out for Delivery', icon: '📦', label: 'Delivery' }, { key: 'Delivered', icon: '✅', label: 'Delivered' }]; const sp = { Exception: '#F47920', Returned: '#64748b', 'On Hold': '#ea580c' }; if (sp[cs]) { document.getElementById('progressSteps').innerHTML = `<div style="width:100%;text-align:center;padding:8px 0;color:${sp[cs]};font-family:var(--font-d);font-weight:600;font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;">⚠️ ${cs}</div>`; return } const ci = steps.findIndex(s => s.key === cs); const fp = ci >= 0 ? (ci / (steps.length - 1)) * 84 : 0; const c = document.getElementById('progressSteps'); c.innerHTML = '<div class="p-fill" id="progressFill" style="width:0%"></div>'; steps.forEach((step, i) => { const done = i < ci, active = i === ci; const el = document.createElement('div'); el.className = 'p-step'; el.innerHTML = `<div class="p-dot ${active ? 'active' : done ? 'done' : ''}">${done ? '✓' : step.icon}</div><div class="p-label ${active ? 'active' : done ? 'done' : ''}">${step.label}</div>`; c.appendChild(el) }); requestAnimationFrame(() => requestAnimationFrame(() => { const el = document.getElementById('progressFill'); if (el) el.style.width = fp + '%' })) }
+    function renderContact(id, c) { if (!c) return; document.getElementById(id).innerHTML = [['Name', c.name], ['City', c.city], ['Country', c.country], ['Address', c.address], ...(c.email ? [['Email', c.email]] : []), ...(c.phone ? [['Phone', c.phone]] : [])].map(([l, v]) => `<div class="info-row"><span class="info-label">${l}</span><span class="info-value">${v || '—'}</span></div>`).join('') }
+    function renderDetails(s) { const rows = [['Description', s.packageInfo?.description || s.description || '—'], ['Service', s.service || '—'], ['Weight', s.packageInfo?.weight || '—'], ['Dimensions', s.packageInfo?.dimensions || '—'], ['Origin', s.origin || '—'], ['Destination', s.destination || '—'], ['Est. Delivery', s.estimatedDelivery ? formatDate(s.estimatedDelivery) : 'TBD'], ['Created', formatDate(s.createdAt)], ['Last Updated', formatDateTime(s.updatedAt)]]; document.getElementById('shipDetails').innerHTML = rows.map(([l, v]) => `<div class="info-row"><span class="info-label">${l}</span><span class="info-value">${v}</span></div>`).join('') }
+    function renderMap(loc) { const lat = loc?.lat || 0, lng = loc?.lng || 0; const ln = loc?.name || loc?.address || lat.toFixed(4) + ',' + lng.toFixed(4); document.getElementById('mapLocText').textContent = ln; if (!shipmentMap) { shipmentMap = L.map('shipmentMap', { zoomControl: true }).setView([lat, lng], 11); L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap', maxZoom: 19 }).addTo(shipmentMap); setTimeout(() => shipmentMap.invalidateSize(), 120) } else { shipmentMap.setView([lat, lng], 11); if (mapMarker) mapMarker.remove(); setTimeout(() => shipmentMap.invalidateSize(), 120) } const icon = L.divIcon({ html: `<div style="width:28px;height:28px;background:#F47920;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2.5px solid #fff;box-shadow:0 3px 14px rgba(244,121,32,.55)"></div>`, className: '', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -32] }); mapMarker = L.marker([lat, lng], { icon }).addTo(shipmentMap).bindPopup(`<b>📍 Current Location</b><br><span style="color:#555;font-size:.82rem">${ln}</span>`).openPopup() }
+    function renderTimeline(events) { const tl = document.getElementById('timeline'); if (!events || events.length === 0) { tl.innerHTML = '<p style="color:#9BA3BC;font-size:.82rem">No events recorded yet.</p>'; return } tl.innerHTML = events.map((ev, i) => `<div class="tl-item ${i === 0 ? 'latest' : ''}"><div class="tl-dot"></div><div class="tl-time">${formatDateTime(ev.timestamp)}</div><div class="tl-status">${ev.status}</div><div class="tl-loc">📍 ${ev.location}</div>${ev.description ? `<div class="tl-desc">${ev.description}</div>` : ''}</div>`).join('') }
+    document.getElementById('trackingInput').addEventListener('keydown', e => { if (e.key === 'Enter') trackShipment() });
+    document.getElementById('trackAgainInput').addEventListener('keydown', e => { if (e.key === 'Enter') doTrackAgain() });
+    const urlTn = new URLSearchParams(window.location.search).get('track');
+    if (urlTn) { document.getElementById('trackingInput').value = urlTn; trackShipment() }
+    
+    // ── REVIEWS CAROUSEL ─────────────────────────────────────────────────────────
+    let rvCurrent = 0; const rvTotal = 2;
+    function rvMove(dir) { rvGoTo(rvCurrent + dir) }
+    function rvGoTo(idx) {
+      rvCurrent = Math.max(0, Math.min(idx, rvTotal - 1));
+      const w = document.getElementById('reviewsCarousel').offsetWidth;
+      document.getElementById('rvTrack').style.transform = 'translateX(-' + (rvCurrent * w) + 'px)';
+      document.querySelectorAll('.rv-dot').forEach((d, i) => d.classList.toggle('active', i === rvCurrent));
+      document.getElementById('rvPrev').disabled = rvCurrent === 0;
+      document.getElementById('rvNext').disabled = rvCurrent === rvTotal - 1;
+    }
+    rvGoTo(0);
+    window.addEventListener('resize', () => rvGoTo(rvCurrent));
+    // Auto-advance every 7 seconds
+    setInterval(() => rvGoTo(rvCurrent < rvTotal - 1 ? rvCurrent + 1 : 0), 7000);
+
+  </script>
+</body>
+
+</html>

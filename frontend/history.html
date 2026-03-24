@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our History — Global Cargo Shipping Company | Est. 1990</title>
+  <link rel="icon" href="assets/images/logos/logo.webp">
+  <meta property="og:title" content="Our History — GCSC">
+  <meta property="og:image" content="assets/images/logos/logo.webp">
+  <meta name="description"
+    content="From a small freight office in London to America's most trusted international cargo company — the story of Global Cargo Shipping Company since 1990.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1A3A8A;
+      --navy-d: #0F2557;
+      --navy-l: #2E5DB3;
+      --orange: #F47920;
+      --orange-d: #D4620F;
+      --orange-l: #FFF3E8;
+      --white: #fff;
+      --off-white: #F7F8FB;
+      --grey-bg: #F4F5F8;
+      --grey-bd: #E2E6EE;
+      --text-h: #0F1F52;
+      --text-b: #3A4468;
+      --text-m: #6B7491;
+      --text-l: #9BA3BC;
+      --font-d: 'Oswald', 'Arial Narrow', sans-serif;
+      --font-b: 'Source Sans 3', Arial, sans-serif;
+      --shadow-sm: 0 2px 8px rgba(10, 30, 90, .07);
+      --shadow-md: 0 8px 32px rgba(10, 30, 90, .12);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--white);
+      color: var(--text-b);
+      -webkit-font-smoothing: antialiased
+    }
+
+    /* HEADER */
+    header {
+      background: var(--white);
+      box-shadow: 0 2px 16px rgba(10, 30, 90, .1);
+      position: sticky;
+      top: 0;
+      z-index: 100
+    }
+
+    .h-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      height: 76px;
+      gap: 20px;
+      justify-content: space-between
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none
+    }
+
+    .logo img {
+      height: 58px;
+      width: auto;
+      object-fit: contain
+    }
+
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-b);
+      font-size: .86rem;
+      font-weight: 600;
+      color: var(--text-m);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .nav-back:hover {
+      color: var(--navy)
+    }
+
+    .h-right {
+      display: flex;
+      gap: 18px;
+      align-items: center
+    }
+
+    .h-link {
+      font-family: var(--font-b);
+      font-size: .87rem;
+      font-weight: 600;
+      color: var(--text-b);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    .h-link:hover {
+      color: var(--orange)
+    }
+
+    .h-cta {
+      background: var(--orange);
+      color: var(--white);
+      padding: 9px 20px;
+      border-radius: 3px;
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      text-decoration: none;
+      transition: background .2s
+    }
+
+    .h-cta:hover {
+      background: var(--orange-d)
+    }
+
+    /* HERO */
+    .page-hero {
+      position: relative;
+      min-height: 380px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden
+    }
+
+    .ph-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-image: url('assets/images/site/gcsc-our-story-hero.webp')
+    }
+
+    .ph-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(10, 25, 80, .95) 0%, rgba(10, 25, 80, .6) 50%, rgba(10, 25, 80, .3) 100%)
+    }
+
+    .ph-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 60px 24px;
+      width: 100%
+    }
+
+    .ph-kicker {
+      font-family: var(--font-d);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 10px
+    }
+
+    .ph-title {
+      font-family: var(--font-d);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      line-height: 1.07;
+      margin-bottom: 14px
+    }
+
+    .ph-title span {
+      color: var(--orange)
+    }
+
+    .ph-sub {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, .72);
+      max-width: 560px;
+      line-height: 1.72
+    }
+
+    .ph-years {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 22px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .15);
+      padding: 10px 20px;
+      border-radius: 3px
+    }
+
+    .ph-years-txt {
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: rgba(255, 255, 255, .8)
+    }
+
+    .ph-year-n {
+      font-family: var(--font-d);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--orange)
+    }
+
+    /* INTRO */
+    .intro-section {
+      padding: 72px 24px;
+      background: var(--white)
+    }
+
+    .intro-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center
+    }
+
+    .intro-text {}
+
+    .sec-kicker {
+      font-family: var(--font-d);
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 8px
+    }
+
+    .sec-title {
+      font-family: var(--font-d);
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      color: var(--text-h);
+      line-height: 1.13;
+      margin-bottom: 18px
+    }
+
+    .sec-title span {
+      color: var(--orange)
+    }
+
+    .body-text {
+      font-size: .97rem;
+      color: var(--text-b);
+      line-height: 1.82;
+      margin-bottom: 14px
+    }
+
+    .body-text:last-child {
+      margin-bottom: 0
+    }
+
+    .intro-img {
+      width: 100%;
+      height: 440px;
+      object-fit: cover;
+      border-radius: 4px;
+      box-shadow: var(--shadow-md)
+    }
+
+    .intro-img-caption {
+      margin-top: 8px;
+      font-size: .75rem;
+      color: var(--text-l);
+      text-align: center;
+      font-style: italic
+    }
+
+    /* TIMELINE */
+    .timeline-section {
+      padding: 80px 24px;
+      background: var(--off-white)
+    }
+
+    .tl-inner {
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    .tl-header {
+      text-align: center;
+      margin-bottom: 60px
+    }
+
+    .timeline {
+      position: relative;
+      padding: 0
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--grey-bd);
+      transform: translateX(-50%)
+    }
+
+    .tl-item {
+      display: flex;
+      gap: 0;
+      margin-bottom: 52px;
+      position: relative
+    }
+
+    .tl-item:last-child {
+      margin-bottom: 0
+    }
+
+    .tl-item.left {
+      flex-direction: row-reverse
+    }
+
+    .tl-side {
+      flex: 1;
+      padding: 0 52px
+    }
+
+    .tl-center {
+      width: 52px;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 14px;
+      position: relative;
+      z-index: 2
+    }
+
+    .tl-dot {
+      width: 18px;
+      height: 18px;
+      background: var(--orange);
+      border: 3px solid var(--white);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(244, 121, 32, .25)
+    }
+
+    .tl-card {
+      background: var(--white);
+      border: 1px solid var(--grey-bd);
+      border-radius: 4px;
+      padding: 24px 26px;
+      box-shadow: var(--shadow-sm);
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .tl-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md)
+    }
+
+    .tl-year {
+      font-family: var(--font-d);
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--orange);
+      line-height: 1;
+      margin-bottom: 8px
+    }
+
+    .tl-title {
+      font-family: var(--font-d);
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--text-h);
+      margin-bottom: 10px
+    }
+
+    .tl-text {
+      font-size: .86rem;
+      color: var(--text-m);
+      line-height: 1.75
+    }
+
+    .tl-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 3px;
+      margin-bottom: 14px
+    }
+
+    /* VALUES */
+    .values-section {
+      padding: 72px 24px;
+      background: var(--navy-d)
+    }
+
+    .values-inner {
+      max-width: 1240px;
+      margin: 0 auto
+    }
+
+    .values-title {
+      font-family: var(--font-d);
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      color: var(--white);
+      margin-bottom: 12px
+    }
+
+    .values-title span {
+      color: var(--orange)
+    }
+
+    .values-sub {
+      font-size: .97rem;
+      color: rgba(255, 255, 255, .55);
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 48px
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px
+    }
+
+    .val-card {
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-top: 3px solid var(--orange);
+      padding: 24px 22px;
+      border-radius: 0 0 3px 3px
+    }
+
+    .val-icon {
+      font-size: 1.8rem;
+      margin-bottom: 14px
+    }
+
+    .val-title {
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .92rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--white);
+      margin-bottom: 8px
+    }
+
+    .val-text {
+      font-size: .82rem;
+      color: rgba(255, 255, 255, .5);
+      line-height: 1.7
+    }
+
+    /* LEADERSHIP */
+    .leadership-section {
+      padding: 72px 24px;
+      background: var(--white)
+    }
+
+    .leadership-inner {
+      max-width: 1240px;
+      margin: 0 auto
+    }
+
+    .ldr-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      margin-top: 44px
+    }
+
+    .ldr-card {
+      text-align: center
+    }
+
+    .ldr-img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 14px;
+      filter: grayscale(.15)
+    }
+
+    .ldr-name {
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .95rem;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--text-h);
+      margin-bottom: 4px
+    }
+
+    .ldr-title {
+      font-size: .78rem;
+      color: var(--orange);
+      font-weight: 600;
+      margin-bottom: 4px
+    }
+
+    .ldr-bio {
+      font-size: .78rem;
+      color: var(--text-m);
+      line-height: 1.6
+    }
+
+    /* MILESTONES STRIP */
+    .milestone-strip {
+      background: var(--navy);
+      padding: 48px 24px
+    }
+
+    .ms-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+      text-align: center
+    }
+
+    .ms-n {
+      font-family: var(--font-d);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--orange);
+      margin-bottom: 4px
+    }
+
+    .ms-l {
+      font-size: .72rem;
+      color: rgba(255, 255, 255, .6);
+      text-transform: uppercase;
+      letter-spacing: .1em
+    }
+
+    /* QUOTE */
+    .quote-section {
+      background: var(--grey-bg);
+      padding: 64px 24px
+    }
+
+    .quote-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center
+    }
+
+    .quote-marks {
+      font-size: 4rem;
+      color: var(--orange);
+      opacity: .25;
+      font-family: Georgia, serif;
+      line-height: 1;
+      margin-bottom: -20px
+    }
+
+    .quote-text {
+      font-family: var(--font-d);
+      font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+      font-weight: 400;
+      color: var(--text-h);
+      line-height: 1.5;
+      letter-spacing: .02em;
+      margin-bottom: 28px;
+      font-style: italic
+    }
+
+    .quote-author {
+      font-family: var(--font-d);
+      font-size: .9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--navy)
+    }
+
+    .quote-role {
+      font-size: .78rem;
+      color: var(--text-m);
+      margin-top: 4px
+    }
+
+    /* CTA */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-d) 100%);
+      padding: 72px 24px;
+      text-align: center
+    }
+
+    .cta-title {
+      font-family: var(--font-d);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      color: var(--white);
+      margin-bottom: 12px
+    }
+
+    .cta-title span {
+      color: var(--orange)
+    }
+
+    .cta-sub {
+      font-size: .98rem;
+      color: rgba(255, 255, 255, .6);
+      max-width: 480px;
+      margin: 0 auto 32px;
+      line-height: 1.72
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    .cta-btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      padding: 13px 32px;
+      border-radius: 3px;
+      text-decoration: none;
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .9rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      transition: background .2s
+    }
+
+    .cta-btn-primary:hover {
+      background: var(--orange-d)
+    }
+
+    .cta-btn-sec {
+      background: rgba(255, 255, 255, .1);
+      color: var(--white);
+      padding: 13px 32px;
+      border-radius: 3px;
+      text-decoration: none;
+      font-family: var(--font-d);
+      font-weight: 600;
+      font-size: .9rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      border: 1px solid rgba(255, 255, 255, .2);
+      transition: all .2s
+    }
+
+    .cta-btn-sec:hover {
+      background: rgba(255, 255, 255, .18)
+    }
+
+    /* FOOTER */
+    .footer-bot {
+      background: #08122A;
+      padding: 22px 24px;
+      color: rgba(255, 255, 255, .3);
+      font-size: .73rem
+    }
+
+    .fb-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .fb-inner a {
+      color: rgba(255, 255, 255, .3);
+      text-decoration: none;
+      margin-left: 18px
+    }
+
+    .fb-inner a:hover {
+      color: rgba(255, 255, 255, .7)
+    }
+
+    @media(max-width:900px) {
+      .intro-inner {
+        grid-template-columns: 1fr
+      }
+
+      .intro-img {
+        height: 300px
+      }
+
+      .values-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .ldr-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .ms-inner {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .timeline::before {
+        left: 24px
+      }
+
+      .tl-item,
+      .tl-item.left {
+        flex-direction: column
+      }
+
+      .tl-center {
+        width: 100%;
+        justify-content: flex-start;
+        padding-left: 16px;
+        padding-top: 0;
+        margin-bottom: 12px
+      }
+
+      .tl-side {
+        padding: 0 0 0 50px
+      }
+    }
+
+    @media(max-width:560px) {
+      .values-grid {
+        grid-template-columns: 1fr
+      }
+
+      .ldr-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .ms-inner {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .cta-btns {
+        flex-direction: column;
+        align-items: center
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="h-inner">
+      <a href="index.html" class="logo">
+        <img src="assets/images/logos/logo_transparent.webp" alt="Global Cargo Shipping Company" />
+      </a>
+      <div class="h-right">
+        <a href="index.html" class="h-link">Track Shipment</a>
+        <a href="index.html" class="h-link">Services</a>
+        <a href="quote.html" class="h-cta">Get a Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="page-hero">
+    <div class="ph-bg"></div>
+    <div class="ph-overlay"></div>
+    <div class="ph-content">
+      <div class="ph-kicker">Our Story · Est. 1990</div>
+      <h1 class="ph-title">Born in England.<br>Built for <span>America.</span><br>Trusted Worldwide.</h1>
+      <p class="ph-sub">For over three decades, Global Cargo Shipping Company has connected businesses and people across
+        the globe. This is our story — of vision, resilience, and an uncompromising commitment to delivering more than
+        packages.</p>
+      <div class="ph-years">
+        <div class="ph-year-n">1990</div>
+        <div class="ph-years-txt">→ Founded in London, England</div>
+        <div class="ph-year-n" style="margin-left:8px">2025</div>
+        <div class="ph-years-txt">→ 35 Years · US Headquarters</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="intro-section">
+    <div class="intro-inner">
+      <div class="intro-text">
+        <div class="sec-kicker">The Beginning</div>
+        <div class="sec-title">A Vision Forged<br>in <span>Old England</span></div>
+        <p class="body-text">The story of Global Cargo Shipping Company begins in the autumn of 1990, in a modest
+          freight office on the outskirts of London. Founded by a team of determined logistics professionals who
+          believed that international shipping could be done with greater transparency, care, and reliability than the
+          industry standard of the time, GCSC was built on a simple but powerful promise: <em>every shipment, treated as
+            if it were our own.</em></p>
+        <p class="body-text">In those early years, the company carved a reputation across the United Kingdom and Europe
+          for its personal service, meticulous customs knowledge, and the kind of accountability that larger competitors
+          simply couldn't match. Small businesses, manufacturers, and even private individuals chose GCSC not because it
+          was the cheapest, but because it was the best.</p>
+        <p class="body-text">By the mid-1990s, GCSC had established freight corridors across Western Europe, expanded
+          its air freight capabilities, and signed its first transatlantic partnership agreements — setting the stage
+          for the company's defining chapter.</p>
+      </div>
+      <div>
+        <img class="intro-img"
+          src="assets/images/site/gcsc-company-evolution.png"
+          alt="Early GCSC Operations" loading="lazy" />
+        <div class="intro-img-caption">GCSC operations at the dawn of the company — precision and care from day one.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline-section">
+    <div class="tl-inner">
+      <div class="tl-header">
+        <div class="sec-kicker" style="text-align:center">Our Journey</div>
+        <div class="sec-title" style="text-align:center">35 Years of <span>Milestones</span></div>
+      </div>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-side" style="padding-right:52px;text-align:right">
+            <div class="tl-card">
+              <div class="tl-year">1990</div>
+              <div class="tl-title">Founded in London, England</div>
+              <div class="tl-text">Global Cargo Shipping Company is established at Canary Wharf, London, by founder
+                Richard H. Ashworth and a team of five freight specialists. The company's first shipment — a consignment
+                of industrial components — departs from Heathrow Airport to Hamburg, Germany. First-year revenue exceeds
+                projections by 40%.</div>
+            </div>
+          </div>
+          <div class="tl-center">
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-side" style="padding-left:52px"></div>
+        </div>
+
+        <div class="tl-item left">
+          <div class="tl-side" style="padding-left:52px">
+            <div class="tl-card">
+              <img class="tl-img"
+                src="assets/images/site/gcsc-european-expansion.jpeg"
+                alt="European Expansion" loading="lazy" />
+              <div class="tl-year">1994</div>
+              <div class="tl-title">European Network Established</div>
+              <div class="tl-text">GCSC opens offices in Frankfurt, Amsterdam, and Paris, creating one of the most
+                comprehensive freight forwarding networks in Northern Europe. The company surpasses 5,000 shipments per
+                year and launches its first dedicated customs brokerage division. ISO 9001 certification achieved.</div>
+            </div>
+          </div>
+          <div class="tl-center">
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-side" style="padding-right:52px"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-side" style="padding-right:52px;text-align:right">
+            <div class="tl-card">
+              <div class="tl-year">1998</div>
+              <div class="tl-title">First Transatlantic Corridor</div>
+              <div class="tl-text">GCSC launches its inaugural direct transatlantic freight service between London
+                Heathrow and JFK International, New York. The route, combining air and sea options, immediately becomes
+                the company's highest-performing trade lane. A strategic partnership with a leading US customs house
+                positions GCSC as a credible transatlantic player.</div>
+            </div>
+          </div>
+          <div class="tl-center">
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-side" style="padding-left:52px"></div>
+        </div>
+
+        <div class="tl-item left">
+          <div class="tl-side" style="padding-left:52px">
+            <div class="tl-card">
+              <img class="tl-img"
+                src="assets/images/site/epub_port-of-los-angeles-pier-300-channel-aerial-credit-port-of-los-angeles_1080x1080_webp-compressed_webpifier.webp"
+                alt="US Expansion" loading="lazy" />
+              <div class="tl-year">2003</div>
+              <div class="tl-title">US Headquarters Opens — New York</div>
+              <div class="tl-text">Recognizing the extraordinary growth potential of the North American market, GCSC
+                establishes its United States headquarters at One World Trade Center, New York City. The company
+                registers as an FMC-licensed NVOCC and begins building its domestic US freight network. The
+                transatlantic becomes the company's primary revenue corridor within 18 months.</div>
+            </div>
+          </div>
+          <div class="tl-center">
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-side" style="padding-right:52px"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-side" style="padding-right:52px;text-align:right">
+            <div class="tl-card">
+              <div class="tl-year">2008</div>
+              <div class="tl-title">Weathering the Storm — Growth Through Crisis</div>
+              <div class="tl-text">While the global financial crisis devastated many logistics firms, GCSC's
+                conservative financial management and diversified client base allowed the company not only to survive,
+                but to acquire three struggling regional US freight companies at favorable valuations. By 2010, GCSC had
+                offices in New York, Los Angeles, Chicago, and Miami — becoming a true national US freight brand.</div>
+            </div>
+          </div>
+          <div class="tl-center">
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-side" style="padding-left:52px"></div>
+        </div>
+
+        <div class="tl-item left">
+          <div class="tl-side" style="padding-left:52px">
+            <div class="tl-card">
+              <img class="tl-img"
+                src="assets/images/site/gcsc-live-tracking.jpg"
+                alt="Technology" loading="lazy" />
+              <div class="tl-year">2014</div>
+              <div class="tl-title">Technology Revolution — Live Tracking Platform</div>
+              <div class="tl-text">GCSC launches its proprietary shipment tracking platform, giving customers real-time
+                visibility into every stage of their cargo's journey. The platform, built over three years by an
+                in-house engineering team in New York, processes over 2 million tracking events per day by 2016. GCSC
+                becomes one of the first mid-tier US freight forwarder to offer live GPS tracking as standard.</div>
+            </div>
+          </div>
+          <div class="tl-center">
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-side" style="padding-right:52px"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-side" style="padding-right:52px;text-align:right">
+            <div class="tl-card">
+              <div class="tl-year">2018</div>
+              <div class="tl-title">100 Countries. 100 Reasons to Trust.</div>
+              <div class="tl-text">GCSC achieves a landmark milestone — active shipping operations in 100 countries. The
+                company is awarded the US Department of Commerce Export Achievement Award, recognizing its role in
+                helping American small businesses access global markets. Annual US revenue exceeds $400 million for the
+                first time. The London office, now a European regional hub, celebrates 28 years of uninterrupted
+                operation.</div>
+            </div>
+          </div>
+          <div class="tl-center">
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-side" style="padding-left:52px"></div>
+        </div>
+
+        <div class="tl-item left">
+          <div class="tl-side" style="padding-left:52px">
+            <div class="tl-card">
+              <img class="tl-img"
+                src="assets/images/site/gcsc-smart-warehousing.jpg"
+                alt="Smart Warehousing" loading="lazy" />
+              <div class="tl-year">2021</div>
+              <div class="tl-title">Smart Logistics — AI-Powered Operations</div>
+              <div class="tl-text">GCSC invests $85 million in its Smart Logistics initiative — deploying AI-powered
+                route optimization, automated warehousing robots, and predictive customs clearance technology across its
+                US network. The COVID-19 supply chain crisis, far from breaking GCSC, validates its investment in
+                redundancy and technology. GCSC becomes a critical lifeline for US healthcare and pharmaceutical supply
+                chains during the pandemic.</div>
+            </div>
+          </div>
+          <div class="tl-center">
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-side" style="padding-right:52px"></div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-side" style="padding-right:52px;text-align:right">
+            <div class="tl-card">
+              <img class="tl-img"
+                src="assets/images/site/gcsc-shipping-port-sunset.png"
+                alt="GCSC Today" loading="lazy" />
+              <div class="tl-year">2025</div>
+              <div class="tl-title">35 Years Strong — America's Freight Partner</div>
+              <div class="tl-text">Today, Global Cargo Shipping Company operates from 14 US regional offices, serves
+                198+ countries, and employs over 4,800 professionals worldwide. Voted America's Best Freight Forwarder
+                for three consecutive years, GCSC continues to honor the values instilled in a small London office in
+                1990: reliability, transparency, and the unwavering belief that every shipment matters. The best chapter
+                is yet to be written.</div>
+            </div>
+          </div>
+          <div class="tl-center">
+            <div class="tl-dot"></div>
+          </div>
+          <div class="tl-side" style="padding-left:52px"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="values-section">
+    <div class="values-inner">
+      <div class="sec-kicker" style="color:rgba(255,255,255,.4)">What We Stand For</div>
+      <div class="values-title">The <span>Core Values</span> That<br>Have Never Changed</div>
+      <div class="values-sub">From a London freight office in 1990 to a New York-headquartered global operation — these
+        four principles have guided every decision GCSC has ever made.</div>
+      <div class="values-grid">
+        <div class="val-card">
+          <div class="val-icon">🤝</div>
+          <div class="val-title">Integrity Above All</div>
+          <div class="val-text">We don't hide fees, embellish timelines, or make promises we can't keep. Every quote is
+            honest, every update is accurate, and every problem is communicated immediately.</div>
+        </div>
+        <div class="val-card">
+          <div class="val-icon">⚡</div>
+          <div class="val-title">Relentless Speed</div>
+          <div class="val-text">Time is the one resource our clients can't recover. We optimize every step of the
+            freight journey — from booking to customs to final delivery — to move faster without cutting corners.</div>
+        </div>
+        <div class="val-card">
+          <div class="val-icon">🌍</div>
+          <div class="val-title">Global Thinking</div>
+          <div class="val-text">We don't just ship to countries — we understand them. 35 years of building genuine
+            relationships with agents, port authorities, and carriers across 198+ nations gives us insight no technology
+            can replicate.</div>
+        </div>
+        <div class="val-card">
+          <div class="val-icon">🧠</div>
+          <div class="val-title">Continuous Innovation</div>
+          <div class="val-text">The logistics industry never stands still — and neither do we. From live tracking to
+            AI-powered routing to automated customs, we invest relentlessly in technology that makes your shipments
+            smarter.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote-section">
+    <div class="quote-inner">
+      <div class="quote-marks">"</div>
+      <div class="quote-text">We didn't set out to become the biggest freight company in the world. We set out to be the
+        most trusted one in whatever room we walked into. Thirty-five years later, that remains our only ambition.</div>
+      <div class="quote-author">Richard H. Ashworth</div>
+      <div class="quote-role">Founder & Chairman Emeritus — Global Cargo Shipping Company, London 1990 / New York 2025
+      </div>
+    </div>
+  </section>
+
+  <!-- MILESTONE STRIP -->
+  <div class="milestone-strip">
+    <div class="ms-inner">
+      <div>
+        <div class="ms-n">1990</div>
+        <div class="ms-l">Year Founded</div>
+      </div>
+      <div>
+        <div class="ms-n">198+</div>
+        <div class="ms-l">Countries Active</div>
+      </div>
+      <div>
+        <div class="ms-n">4,800+</div>
+        <div class="ms-l">US & Global Team</div>
+      </div>
+      <div>
+        <div class="ms-n">14</div>
+        <div class="ms-l">US Offices</div>
+      </div>
+      <div>
+        <div class="ms-n">$1.2B+</div>
+        <div class="ms-l">Annual Revenue</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-title">Ready to Ship With a Company<br>You Can <span>Actually Trust?</span></div>
+    <div class="cta-sub">35 years of reliability doesn't happen by accident. Experience the GCSC difference — whether
+      you're shipping a single parcel or managing a complex international supply chain.</div>
+    <div class="cta-btns">
+      <a href="index.html" class="cta-btn-primary">Track a Shipment →</a>
+      <a href="#" class="cta-btn-sec">Get a Free Quote</a>
+      <a href="index.html" class="cta-btn-sec"
+        onclick="setTimeout(()=>document.querySelector('.h-chat-btn')?.click(),500);return true">Talk to Our Team</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer-bot">
+    <div class="fb-inner">
+      <span>© 2025 Global Cargo Shipping Company Inc. — Registered in New York, USA. Originally established London, UK,
+        1990.</span>
+      <div><a href="index.html">Home</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="chat-widget.js"></script>
+</body>
+
+</html>
