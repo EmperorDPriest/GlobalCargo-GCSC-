@@ -16,8 +16,8 @@ const _isLocal = (
    !location.hostname.includes('.'))
 );
 const CONFIG = {
-  API_BASE_URL: _isLocal ? 'http://localhost:5000/api' : 'https://api.globalcargo360.com/api',
-  SOCKET_URL: _isLocal ? 'http://localhost:5000' : 'https://api.globalcargo360.com',
+  API_BASE_URL: _isLocal ? 'http://localhost:5000/api' : 'https://globalcargo-gcsc.onrender.com/api',
+  SOCKET_URL: _isLocal ? 'http://localhost:5000' : 'https://globalcargo-gcsc.onrender.com',
   APP_NAME: 'Global Cargo Shipping Company',
   VERSION: '5.1.0'
 };
