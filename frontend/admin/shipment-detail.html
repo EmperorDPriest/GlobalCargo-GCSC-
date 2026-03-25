@@ -942,6 +942,7 @@
                     <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-3);margin-bottom:10px;font-weight:600;">📤 Sender</div>
                     ${renderRows([
         ['Name', shipment.sender.name],
+        ['Address', shipment.sender.address],
         ['City', shipment.sender.city],
         ['Country', shipment.sender.country],
         ...(shipment.sender.email ? [['Email', shipment.sender.email]] : []),
@@ -952,6 +953,7 @@
                     <div style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-3);margin-bottom:10px;font-weight:600;">📥 Receiver</div>
                     ${renderRows([
         ['Name', shipment.receiver.name],
+        ['Address', shipment.receiver.address],
         ['City', shipment.receiver.city],
         ['Country', shipment.receiver.country],
         ...(shipment.receiver.email ? [['Email', shipment.receiver.email]] : []),
