@@ -539,15 +539,22 @@
     }
 
     /* ── Mobile ── */
-    @media (max-width: 480px) {
+   @media (max-width: 480px) {
       #gcsc-panel {
-        width: calc(100vw - 16px); bottom: 92px; right: 8px;
-        max-height: calc(100dvh - 106px); border-radius: 14px;
+        width: calc(100vw - 16px); bottom: 88px; right: 8px;
+        max-height: calc(100dvh - 102px); border-radius: 14px;
       }
-      #gcsc-launcher-wrap { bottom: 14px; right: 10px; gap: 6px; }
-      #gcsc-launcher { width: 54px; height: 54px; }
-      #gcsc-cta-label { font-size: 11.5px; padding: 4px 11px; }
+      #gcsc-launcher-wrap { bottom: 12px; right: 10px; gap: 5px; }
+      #gcsc-launcher { width: 50px; height: 50px; }
+      #gcsc-cta-label { font-size: 11px; padding: 4px 10px; }
       .gcsc-bubble { max-width: 88%; }
+    }
+    
+    /* Extra small screens — hide label, keep button compact */
+    @media (max-width: 360px) {
+      #gcsc-launcher-wrap { bottom: 10px; right: 8px; }
+      #gcsc-launcher { width: 46px; height: 46px; }
+      #gcsc-cta-label { display: none; }
     }
   `;
 
