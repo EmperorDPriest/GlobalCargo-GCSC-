@@ -46,9 +46,11 @@
 
     /* ── Layout ─────────────────────────────────────────────────────────── */
     #app {
-      height: 100vh; display: flex; flex-direction: column;
+      height: 100vh;
+      height: var(--app-h, 100dvh); /* JS sets exact px on resize; dvh for modern fallback */
+      display: flex; flex-direction: column;
     }
-
+    
     /* ── Top Nav ─────────────────────────────────────────────────────────── */
     #topnav {
       height: var(--header-h); background: var(--surface);
