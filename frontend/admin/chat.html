@@ -1044,6 +1044,7 @@ async function openChat(sessionId) {
   document.querySelector('.chat-item[data-session="' + sessionId + '"]')?.classList.add('selected');
   document.getElementById('welcome-screen').style.display = 'none';
   document.getElementById('chat-conv').classList.add('visible');
+  setConvClosed(false);
   document.getElementById('conv-messages').innerHTML =
     '<div class="sys-msg" style="margin:20px auto">Loading…</div>';
   document.getElementById('conv-typing').classList.remove('visible');
@@ -1237,11 +1238,15 @@ function appendSysMsg(text) {
 
 function setConvClosed(closed) {
   document.getElementById('conv-closed-bar').classList.toggle('visible', closed);
-  document.getElementById('conv-input-bar').style.display = closed ? 'none' : 'flex';
+  document.getElementById('conv-input-bar').style.display = closed ? 'none' : '';
   document.getElementById('btn-close').style.display      = closed ? 'none' : '';
   document.getElementById('btn-reopen').style.display     = closed ? '' : 'none';
   document.getElementById('btn-delete').style.display     = closed ? '' : 'none';
   document.getElementById('conv-typing').classList.remove('visible');
+    if (closed) {
+      clearAdminImage();
+      document.getElementById('admin-img-preview').classList.remove('visible');
+  }
 }
 
 function resetConvPanel() {
