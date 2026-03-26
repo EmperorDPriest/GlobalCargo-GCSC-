@@ -761,6 +761,16 @@
 ══════════════════════════════════════════════════════════════════════════ -->
 <script>
 'use strict';
+
+/* ── Mobile viewport height fix ─────────────────────────────────────────── */
+// On mobile, 100vh includes browser chrome (address bar + nav bar).
+// window.innerHeight gives the TRUE visible height.
+function fixMobileVh() {
+  document.documentElement.style.setProperty('--app-h', window.innerHeight + 'px');
+}
+window.addEventListener('resize', fixMobileVh);
+fixMobileVh();
+
 /* ═══════════════════════════════════════════════════════════════════════════
    GCSC Admin Live Chat  —  Definitive v5.3
    Root causes fixed:
